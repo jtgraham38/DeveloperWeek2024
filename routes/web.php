@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/build', function() {
+    return view('build-table');
+});
+
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
     'store', 'update'
