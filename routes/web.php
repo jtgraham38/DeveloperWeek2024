@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//register and update account details routes
+Route::resource('users', UserController::class)->only([
+    'store', 'update'
+]);
+
+//auth routes
+Route::post('/login', [UserController::class, 'authenticate'])->name('login');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
