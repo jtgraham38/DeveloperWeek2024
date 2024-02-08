@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*these styles can be overridden with utility classes*/
+@layer components{
+
+    .menu{
+        @apply bg-gray-800 shadow-lg text-zinc-200
+    }
+    .menu hr{
+        @apply border-zinc-200
+    }
+
+    body {
+        @apply bg-gray-950
+    }
+
+    .primary_btn{
+        @apply text-zinc-200 bg-gradient-to-r from-orange-500 to-amber-400 hover:from-orange-700 hover:to-amber-600 py-2 px-4 rounded text-zinc-900
+    }
+    .secondary_btn{
+        @apply border-2 border-orange-500 hover:border-orange-700 text-orange-500 hover:text-orange-700 py-2 px-4 rounded
+    }
+    .card{
+        @apply bg-gray-800 shadow-lg text-zinc-200 rounded
+    }
+    .card hr{
+        @apply border-zinc-200
+    }
+
+    /*todo: add other bootstrap-esque component styles here, like badge, chips, toasts, etc.*/
+}
+
+h1{
+    @apply text-8xl
+}
+h2{
+    @apply text-6xl
+}
+h3{
+    @apply text-4xl
+}
+h4{
+    @apply text-2xl
+}
+h5{
+    @apply text-xl
+}
+h6{
+    @apply text-lg
+}
