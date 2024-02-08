@@ -1,5 +1,5 @@
-@extends('main')
-@section('template')
+@extends('layouts.dashboard')
+@section('body')
     @auth
         <div class="decoration-sky-500/30">
             <p>Welcome, {{ auth()->user()->name }}</p>
@@ -10,7 +10,7 @@
             </form>
         </div>
     @else
-        <div class="flex flex-row justify-evenly">
+        <div class="flex flex-row justify-between">
             <div class="border">
                 @if ($errors->any())
                     <div style="border: 1px solid gray;">
@@ -43,4 +43,21 @@
             </div>
         </div>
     @endauth
+
+    <br>
+    <br>
+    <button class="secondary_btn">Hi there secnondary button!</button>
+
+    <br>
+    <br>
+    <div class="card p-2">
+        <h4>Cards!</h4>
+        <hr>
+        <ul>
+            <li>this is a card</li>
+            <li>it is used for</li>
+            <li>holding content</li>
+            <li>!!!!!</li>
+        </ul>
+    </div>
 @endsection

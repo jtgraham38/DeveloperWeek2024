@@ -21,5 +21,5 @@
 
     <br>
 
-    <button class="hover:text-slate-400"  type="submit">Sign Up</button>
+    <button class="primary_btn"  type="submit">Sign Up</button>
 </form>
