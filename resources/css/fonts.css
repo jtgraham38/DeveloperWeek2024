@@ -1,0 +1,10 @@
+
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/FundamentalBrigade-R3Me.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Futura', sans-serif;
+    font-size: medium;
+}
