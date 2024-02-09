@@ -19,8 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/build', function() {
+Route::get('/create', function() {
     return view('build-table');
+});
+
+Route::get('/login', function() {
+    return view('login');
 });
 
 //register and update account details routes

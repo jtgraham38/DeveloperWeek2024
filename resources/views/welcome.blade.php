@@ -1,4 +1,7 @@
 @extends('layouts.dashboard')
+@section('title')
+Start
+@endsection
 @section('body')
     @auth
         <div class="decoration-sky-500/30">
@@ -11,7 +14,7 @@
         </div>
     @else
         <div class="flex flex-row justify-between">
-            <div class="border">
+            <div class="">
                 @if ($errors->any())
                     <div style="border: 1px solid gray;">
                         <h3>Errors</h3>
@@ -25,7 +28,7 @@
 
                 @include('users.auth')
             </div>
-            <div class="border">
+            <div class="">
 
                 @if ($errors->any())
                     <div style="border: 1px solid gray;">
