@@ -16,7 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('name');
+            $table->string('description')->nullable();
             $table->string('table_name');
+            $table->boolean('is_private')->default(false);    //user can only access their instances of this entity
             $table->unsignedBigInteger('build_id');
             $table->foreign('build_id')->references('id')->on('builds')->onDelete('cascade');
         });

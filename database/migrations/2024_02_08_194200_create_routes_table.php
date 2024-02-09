@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
+            $table->string('type');     //create, update, read, delete, index, other
+            $table->string('checks')->default('[]');     //list of checks to generate for the route, like auth token check, resource ownership check, etc.
             $table->unsignedBigInteger('entity_id');
             $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
         });
