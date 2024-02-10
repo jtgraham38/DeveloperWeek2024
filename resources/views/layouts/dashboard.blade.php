@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('template')
+
     <div class="menu p-3 w-36 fixed inset-0 mt-12 flex flex-col">
         <div>
             <h4>Menu</h4>

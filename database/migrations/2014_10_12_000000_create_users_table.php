@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('billing_address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->integer('role')->default(0);
         });
     }
 

@@ -56,11 +56,8 @@ Start
     <div class="card p-2">
         <h4>Cards!</h4>
         <hr>
-        <ul>
-            <li>this is a card</li>
-            <li>it is used for</li>
-            <li>holding content</li>
-            <li>!!!!!</li>
-        </ul>
+        <div class="p-3">
+            <h4>Implement the dashboard with htmx.</h4>
+        </div>
     </div>
 @endsection

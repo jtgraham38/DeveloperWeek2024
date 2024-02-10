@@ -28,6 +28,9 @@
     .card hr{
         @apply border-zinc-200
     }
+    .card input{
+        @apply text-gray-800
+    }
 
     /*todo: add other bootstrap-esque component styles here, like badge, chips, toasts, etc.*/
 }
