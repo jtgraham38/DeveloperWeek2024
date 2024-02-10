@@ -15,7 +15,6 @@
 
     </head>
     <body>
-
         <header class="menu p-3 mb-3 flex flex-row justify-between">
             <div>
                 <a href="#" class="hover:text-zinc-400">API Builder</a>
