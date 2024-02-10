@@ -26,21 +26,13 @@
                     <span class="ml-2">or</span>
                     <button onclick="signup_modal.showModal();" class="hover:text-zinc-400 ml-2" href="#">Sign Up <i class="fa-solid fa-user-plus"></i></button>
                 
-                    <dialog id="login_modal" class="py-6 px-3 border border-zinc-200 card relative">
+                    <x-modal id="login_modal">
                         @include('users.auth')
+                    </x-modal>
 
-                        <button onclick="login_modal.close();" class="absolute top-0 right-0 mt-2 mr-2 hover:text-zinc-400">
-                            <i class="fa-solid fa-sm fa-x"></i>
-                        </button>
-                    </dialog>
-
-                    <dialog id="signup_modal" class="py-6 px-3 border border-zinc-200 card relative">
-                            @include('users.create') 
-
-                            <button onclick="signup_modal.close();" class="absolute top-0 right-0 mt-2 mr-2 hover:text-zinc-400">
-                                <i class="fa-solid fa-sm fa-x"></i>
-                            </button>
-                    </dialog>
+                    <x-modal id="signup_modal">
+                        @include('users.create') 
+                    </x-modal>
 
                     @else
                     <form action="{{ route('logout') }}" method="POST" class="my-0">
