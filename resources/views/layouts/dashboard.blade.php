@@ -1,9 +1,24 @@
 @extends('layouts.main')
 @section('template')
 
-    <div class="menu p-3 w-36 fixed inset-0 mt-12 flex flex-col">
+    <div class="menu p-3 w-36 fixed inset-0 flex flex-col">
         <div>
-            <h4>Build</h4>
+            <details>
+                <summary class="text-2xl">
+                    Builds
+                </summary>
+
+                <ul>
+                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl">Project 1</li>
+                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl">Build 2</li>
+                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl">Item 3</li>
+                </ul>
+
+            </details>
+        </div>
+        <br>
+        <div>
+            <h5>Edit</h5>
             <hr>
             <div
                 class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
@@ -24,8 +39,16 @@
         </div>
         <br>
         <div>
-            <h4>Account</h4>
+            <h5>Account</h5>
             <hr>
+            <div 
+                class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
+                hx-get="{{ route('dashboard.settings') }}"
+                hx-target="#dashboard_body"
+                hx-indicator="#dashboard_loader"
+            >
+                <span class="cursor-default">Settings</span>
+            </div>
         </div>
     </div>
 
