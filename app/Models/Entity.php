@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Route;
 use App\Models\EntityAttribute;
 use App\Models\Build;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entity extends Model
 {

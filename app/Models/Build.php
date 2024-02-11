@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Entity;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Build extends Model
 {

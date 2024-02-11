@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\EntityController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,10 @@ Route::get('/create', function() {
 Route::get('/login', function() {
     return view('login');
 });
+
+Route::get('/builds/{build_id}/entities', [ EntityController::class, 'index' ]);
+Route::get('/builds/{build_id}/create-entity', [ EntityController::class, 'create' ]);
+Route::post('/builds/{build_id}/create-entity', [ EntityController::class, 'store' ]);
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
