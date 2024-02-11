@@ -15,10 +15,7 @@
 
     </head>
     <body>
-        <header class="menu p-3 mb-3 flex flex-row justify-between">
-            <div>
-                <a href="#" class="hover:text-zinc-400">API Builder</a>
-            </div>
+        <header class="menu p-3 mb-3 flex flex-row justify-end">
             <div class="flex">
                 @guest
                     <button onclick="login_modal.showModal();" class="hover:text-zinc-400" href="#">Login <i class="fa-solid fa-right-to-bracket"></i></button>
