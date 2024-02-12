@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,11 @@ Route::get('/', function () {
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
     'store', 'update'
+]);
+
+//resource routes for managing builds
+Route::resource('projects', ProjectController::class)->only([
+    'store', 'destroy'
 ]);
 
 //auth routes
