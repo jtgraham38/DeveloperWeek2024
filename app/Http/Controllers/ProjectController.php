@@ -84,4 +84,17 @@ class ProjectController extends Controller
         
     }
 
+    public function editor(string $id){
+
+        $project = Project::findOrFail($id);
+
+        return view('projects.editor', ['project' => $project]);
+    }
+
+    public function settings(string $id){
+
+        $project = Project::findOrFail($id);
+
+        return view('projects.settings', ['project' => $project]);
+    }
 }

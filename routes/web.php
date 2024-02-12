@@ -34,23 +34,10 @@ Route::resource('projects', ProjectController::class)->only([
     'store', 'destroy',
     'index', 'edit',
 ])->middleware([Authenticate::class]);
-Route::get('/projects/edit/index', function () {    //todo: update path
-    return view('dashboard.index');
-})->middleware([Authenticate::class])->name('dashboard.index');
-Route::get('/projects/edit/builder', function () {    //todo: update path
-    return view('dashboard.builder');
-})->middleware([Authenticate::class])->name('dashboard.builder');
+
+Route::get('/projects/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
+Route::get('/projects/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-//dashboard screen routes
-Route::get('/dashboard', function(){
-    return view('layouts.dashboard');
-})->middleware([Authenticate::class])->name('dashboard');
-
-
-Route::get('/settings', function () {   //todo: update path
-    return view('dashboard.settings');
-})->middleware([Authenticate::class])->name('dashboard.settings');

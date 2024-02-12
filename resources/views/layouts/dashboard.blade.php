@@ -41,15 +41,15 @@
             <hr>
             <div
                 class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
-                hx-get="{{ route('dashboard.builder') }}"
+                hx-get="{{ route('projects.editor', ['project'=>$project]) }}"
                 hx-target="#dashboard_body"
                 hx-indicator="#dashboard_loader"    
             >
-                <span class="cursor-default">Builder</span>
+                <span class="cursor-default">Editor</span>
             </div>
             <div 
                 class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
-                hx-get="{{ route('dashboard.settings') }}"
+                hx-get="{{ route('projects.settings', ['project'=>$project]) }}"
                 hx-target="#dashboard_body"
                 hx-indicator="#dashboard_loader"
             >
@@ -62,7 +62,7 @@
             <hr>
             <div 
                 class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
-                hx-get="{{ route('dashboard.settings') }}"
+                hx-get="{{ route('projects.settings') }}"
                 hx-target="#dashboard_body"
                 hx-indicator="#dashboard_loader"
             >
@@ -74,7 +74,7 @@
     <br>
     <br>
 
-    <div class="container mx-auto px-4 ml-44" hx-get="{{ route('dashboard.index') }}" hx-target="#dashboard_body" hx-trigger="load">
+    <div class="container mx-auto px-4 ml-44" hx-get="{{ route('projects.index') }}" hx-target="#dashboard_body" hx-trigger="load">
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner  fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="flex-grow p-3 text-zinc-200">
