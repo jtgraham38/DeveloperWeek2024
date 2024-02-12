@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Route;
 use App\Models\EntityAttribute;
-use App\Models\Build;
+use App\Models\Project;
 
 class Entity extends Model
 {
@@ -34,6 +34,6 @@ class Entity extends Model
 
     public function build()
     {
-        return $this->belongsTo(Build::class);
+        return $this->belongsTo(Project::class);
     }
 }

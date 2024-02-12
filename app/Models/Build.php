@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Entity;
 use App\Models\User;
 
-class Build extends Model
+class Project extends Model
 {
     use HasFactory;
     use SoftDeletes;
