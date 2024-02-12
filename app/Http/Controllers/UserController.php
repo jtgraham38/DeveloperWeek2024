@@ -67,7 +67,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('users.edit');
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('/');
+            return redirect()->route('projects.none_selected');
         }
  
         //if failed, show errors
