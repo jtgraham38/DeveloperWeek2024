@@ -5,7 +5,7 @@
         <div>
             <details>
                 <summary class="text-2xl">
-                    Builds
+                    Projects
                 </summary>
 
                 <ul>
