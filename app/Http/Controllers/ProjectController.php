@@ -55,8 +55,15 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
+        //get project
         $project = Project::findOrFail($id);
 
+        //check if project is owned by user
+        if (request()->user()->cannot('show', $project)) {
+            abort(403);
+        }
+
+        //return view
         return view('projects.show', ['project' => $project]);
     }
 
@@ -65,8 +72,16 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
+        
+        //get project
         $project = Project::findOrFail($id);
 
+        //check if project is owned by user
+        if (request()->user()->cannot('update', $project)) {
+            abort(403);
+        }
+
+        //return view
         return view('layouts.dashboard', ['project' => $project]);
     }
 
@@ -75,7 +90,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //get project
+        $project = Project::findOrFail($id);
+
+        //check if project is owned by user
+        if (request()->user()->cannot('update', $project)) {
+            abort(403);
+        }
+
+        //return view
     }
 
     /**
@@ -83,20 +106,43 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        //get project
+        $project = Project::findOrFail($id);
+
+        //check if project is owned by user
+        if (request()->user()->cannot('destroy', $project)) {
+            abort(403);
+        }
+
+        //return view
+        //TODO
     }
 
     public function editor(string $id){
 
+        //get project
         $project = Project::findOrFail($id);
 
+        //check if project is owned by user
+        if (request()->user()->cannot('update', $project)) {
+            abort(403);
+        }
+
+        //return view
         return view('projects.editor', ['project' => $project]);
     }
 
     public function settings(string $id){
 
+        //get project
         $project = Project::findOrFail($id);
 
+        //check if project is owned by user
+        if (request()->user()->cannot('update', $project)) {
+            abort(403);
+        }
+
+        //return view
         return view('projects.settings', ['project' => $project]);
     }
 
