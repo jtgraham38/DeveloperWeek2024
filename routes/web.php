@@ -22,21 +22,24 @@ use App\Models\Project;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
     'store', 'update',
+    'edit',
 ]);
 
 //resource routes for managing projects
+
 Route::resource('projects', ProjectController::class)->only([
     'store', 'destroy',
-    'index', 'edit',
+    'index', 'edit', 'show' //these are all partial templates to be shown in the dashboard body
 ])->middleware([Authenticate::class]);
 
-Route::get('/projects/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
-Route::get('/projects/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
+Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
+Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
+Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');

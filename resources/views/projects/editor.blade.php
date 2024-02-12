@@ -1,1 +1,2 @@
-Editor
+Editor for project:
+{{ $project->id }}

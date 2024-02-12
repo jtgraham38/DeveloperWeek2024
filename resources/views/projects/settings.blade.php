@@ -1,1 +1,2 @@
-settings!!!
+Settings for project:
+{{ $project->id }}

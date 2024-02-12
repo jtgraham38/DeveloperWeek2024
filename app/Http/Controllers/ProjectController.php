@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('layouts.dashboard');
+        return view('projects.index');
     }
 
     /**
@@ -55,7 +55,9 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('projects.show', ['project' => $project]);
     }
 
     /**
@@ -96,5 +98,9 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
 
         return view('projects.settings', ['project' => $project]);
+    }
+
+    public function none_selected(){
+        return view('layouts.dashboard');
     }
 }
