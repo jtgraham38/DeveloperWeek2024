@@ -26,13 +26,20 @@ Route::get('/', function () {
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
-    'store', 'update'
+    'store', 'update',
 ]);
 
-//resource routes for managing builds
+//resource routes for managing projects
 Route::resource('projects', ProjectController::class)->only([
-    'store', 'destroy'
+    'store', 'destroy',
+    'index', 'edit',
 ])->middleware([Authenticate::class]);
+Route::get('/projects/edit/index', function () {    //todo: update path
+    return view('dashboard.index');
+})->middleware([Authenticate::class])->name('dashboard.index');
+Route::get('/projects/edit/builder', function () {    //todo: update path
+    return view('dashboard.builder');
+})->middleware([Authenticate::class])->name('dashboard.builder');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
@@ -43,12 +50,7 @@ Route::get('/dashboard', function(){
     return view('layouts.dashboard');
 })->middleware([Authenticate::class])->name('dashboard');
 
-Route::get('/index', function () {    //todo: update path
-    return view('dashboard.index');
-})->middleware([Authenticate::class])->name('dashboard.index');
-Route::get('/builder', function () {    //todo: update path
-    return view('dashboard.builder');
-})->middleware([Authenticate::class])->name('dashboard.builder');
+
 Route::get('/settings', function () {   //todo: update path
     return view('dashboard.settings');
 })->middleware([Authenticate::class])->name('dashboard.settings');

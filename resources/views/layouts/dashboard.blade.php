@@ -1,18 +1,24 @@
 @extends('layouts.main')
 @section('template')
 
-    <div class="menu p-3 w-40 fixed inset-0 flex flex-col">
+    <div class="menu p-3 w-44 fixed inset-0 flex flex-col">
         <div>
             <details>
                 <summary class="text-2xl">
-                    Projects
+                    @if(isset($project))
+                        {{ $project->name }}
+                    @else
+                        Projects
+                    @endif
                 </summary>
 
                 <ul>
                     @auth
-                        @foreach(auth()->user()->projects as $project)
-                            <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default" title="{{ $project->description }}">
-                                <i class="fa-solid fa-layer-group"></i> {{ $project->name }}
+                        @foreach(auth()->user()->projects as $_project)
+                            <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default {{ isset($project) && $project->id == $_project->id ? 'bg-amber-800' : ''}}" title="{{ $project->description }}">
+                                <a href="{{ route('projects.edit', ['project' => $_project->id]) }}">
+                                    <i class="fa-solid fa-layer-group"></i> {{ $_project->name }}
+                                </a>
                             </li>
                         @endforeach
                     @endauth
@@ -68,7 +74,7 @@
     <br>
     <br>
 
-    <div class="container mx-auto px-4 ml-40" hx-get="{{ route('dashboard.index') }}" hx-target="#dashboard_body" hx-trigger="load">
+    <div class="container mx-auto px-4 ml-44" hx-get="{{ route('dashboard.index') }}" hx-target="#dashboard_body" hx-trigger="load">
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner  fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="flex-grow p-3 text-zinc-200">

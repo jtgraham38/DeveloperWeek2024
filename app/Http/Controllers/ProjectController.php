@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return view('layouts.dashboard');
     }
 
     /**
@@ -47,7 +47,7 @@ class ProjectController extends Controller
 
         //flash and redirect
         session()->flash('message', 'New project created!');
-        return redirect(route('dashboard'));
+        return redirect(route('projects.edit', ['project'=>$project->id]));
     }
 
     /**
@@ -63,7 +63,9 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('layouts.dashboard', ['project' => $project]);
     }
 
     /**
