@@ -43,3 +43,10 @@ Route::resource('users', UserController::class)->only([
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+//dashboard screen routes
+Route::get('/builder', function () {
+    return view('dashboard.builder');
+})->name('dashboard.builder');
+Route::get('/settings', function () {
+    return view('dashboard.settings');
+})->name('dashboard.settings');

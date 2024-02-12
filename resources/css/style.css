@@ -65,3 +65,5 @@ select {
 input, textarea {
     @apply bg-white text-black rounded p-2 mb-2;
 }
+
+/* htmx style mods */
