@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('table_name');
             $table->boolean('is_private')->default(false);    //user can only access their instances of this entity
             $table->unsignedBigInteger('build_id');
-            $table->foreign('build_id')->references('id')->on('builds')->onDelete('cascade');
+            $table->foreign('build_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

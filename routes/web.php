@@ -4,7 +4,11 @@ use App\Http\Controllers\EntityController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ProjectController;
+
+use App\Http\Middleware\Authenticate;
+
+use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +23,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/create', function() {
     return view('build-table');
@@ -36,17 +40,21 @@ Route::get('/builds/{build_id}/entity/{entity}', [ EntityController::class, 'sho
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([
-    'store', 'update'
+    'store', 'update',
+    'edit',
 ]);
+
+//resource routes for managing projects
+
+Route::resource('projects', ProjectController::class)->only([
+    'store', 'destroy',
+    'index', 'edit', 'show' //these are all partial templates to be shown in the dashboard body
+])->middleware([Authenticate::class]);
+
+Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
+Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
+Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-//dashboard screen routes
-Route::get('/builder', function () {
-    return view('dashboard.builder');
-})->name('dashboard.builder');
-Route::get('/settings', function () {
-    return view('dashboard.settings');
-})->name('dashboard.settings');

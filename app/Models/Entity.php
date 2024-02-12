@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Route;
 use App\Models\EntityAttribute;
-use App\Models\Build;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Project;
 
 class Entity extends Model
 {
@@ -35,6 +35,6 @@ class Entity extends Model
 
     public function build()
     {
-        return $this->belongsTo(Build::class);
+        return $this->belongsTo(Project::class);
     }
 }
