@@ -32,6 +32,7 @@ Route::get('/login', function() {
 Route::get('/builds/{build_id}/entities', [ EntityController::class, 'index' ]);
 Route::get('/builds/{build_id}/create-entity', [ EntityController::class, 'create' ]);
 Route::post('/builds/{build_id}/create-entity', [ EntityController::class, 'store' ]);
+Route::get('/builds/{build_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('entity.show');
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([

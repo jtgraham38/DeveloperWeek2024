@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Entity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class EntityController extends Controller
 {
@@ -40,16 +40,46 @@ class EntityController extends Controller
      */
     public function store($build_id, Request $request)
     {
-        info("POST recieved {data}", ["data" => $request]);
-        return redirect()->back();
+        $entity = DB::table('entities')->insertGetId([
+            'name' => $request->get('entity-name'),
+            'description' => $request->get('table-description'),
+            'table_name' => $request->get('table-name'),
+            'is_private' => $request->get('is-private'),
+            'build_id' => $build_id
+        ]);
+        $entity_attribute_type = [];
+        $request->collect('column-datatype')->each(function(string $type) {
+            $entity_attribute_type[] = $type;
+        });
+        $entity_attribute_name = [];
+        $request->collect('column-name')->each(function(string $name) {
+            $entity_attribute_name[] = $name;
+        });
+        foreach ($entity_attribute_name as $i => $name) {   
+            DB::table('entity_attributes')->insert([
+                'name' => $name,
+                'type' => $entity_attribute_type[$i],
+                'is_key' => false,
+                'is_foreign' => false,
+                'entity_id' => $entity,
+            ]);
+        }
+        return route('entity.show', [ $build_id, $entity ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Entity $entity)
+    public function show($build_id, Entity $entity)
     {
-        //
+        $entity = DB::table('entities')->where('id', '=', $entity)->where('build_id', '=', $build_id)->get();
+        if (count($entity) != 1) {
+            abort(404);
+        }
+        return view('crud.show-entity', [
+            'data' => $entity,
+            'build_id' => $build_id
+        ]);
     }
 
     /**
