@@ -64,7 +64,7 @@
     <br>
     <br>
 
-    <div class="container mx-auto px-4 ml-40" hx-get="{{ route('dashboard.builder') }}" hx-target="#dashboard_body" hx-trigger="load">
+    <div class="container mx-auto px-4 ml-40" hx-get="{{ route('dashboard.index') }}" hx-target="#dashboard_body" hx-trigger="load">
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner  fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="flex-grow p-3 text-zinc-200">

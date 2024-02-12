@@ -33,24 +33,14 @@ class UserController extends Controller
     {
 
         //validate user input
-        // $this->validate($request, [
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6|confirmed', //'confirmed' checks if 'password_confirmation' matches 'password'
-        // ]);
+        $validated_data = $request->validate($request, [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
 
         // //create a user
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => bcrypt($request->password),
-        // ]);
-
-        // //log the user in
-        // auth()->login($user);
-
-        // //redirect to homepage
-        // return redirect('/');
+        $user = User::create($validated_data);
+        return redirect(route('dashboard.index'));
     }
 
     /**

@@ -35,9 +35,16 @@ Route::post('/login', [UserController::class, 'authenticate'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 //dashboard screen routes
-Route::get('/builder', function () {
+Route::get('/dashboard', function(){
+    return view('layouts.dashboard');
+})->name('dashboard');
+
+Route::get('/index', function () {    //todo: update path
+    return view('dashboard.index');
+})->name('dashboard.index');
+Route::get('/builder', function () {    //todo: update path
     return view('dashboard.builder');
 })->name('dashboard.builder');
-Route::get('/settings', function () {
+Route::get('/settings', function () {   //todo: update path
     return view('dashboard.settings');
 })->name('dashboard.settings');
