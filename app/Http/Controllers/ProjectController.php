@@ -39,11 +39,15 @@ class ProjectController extends Controller
         ]);
 
         //create a project
-        $user = Project::create($validated_data);
+        $project = Project::create($validated_data);
+
+        //set owner
+        $project->user_id = auth()->id();
+        $project->save();
 
         //flash and redirect
         session()->flash('message', 'New project created!');
-        return redirect(route('layouts.dashboard'));
+        return redirect(route('dashboard'));
     }
 
     /**

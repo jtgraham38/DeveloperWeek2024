@@ -9,9 +9,13 @@
                 </summary>
 
                 <ul>
-                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default"> <i class="fa-solid fa-layer-group"></i> Project 1</li>
-                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default"> <i class="fa-solid fa-layer-group"></i> Build 2</li>
-                    <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default"> <i class="fa-solid fa-layer-group"></i> Item 3</li>
+                    @auth
+                        @foreach(auth()->user()->projects as $project)
+                            <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default" title="{{ $project->description }}">
+                                <i class="fa-solid fa-layer-group"></i> {{ $project->name }}
+                            </li>
+                        @endforeach
+                    @endauth
 
                     <li class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-xl cursor-default">
                         <button onclick="create_build_modal.showModal();"><i class="fa-solid fa-circle-plus"></i> New Project</button>
