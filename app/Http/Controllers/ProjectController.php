@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Project;
 
-class UserController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,14 +33,17 @@ class UserController extends Controller
     {
 
         //validate user input
-        $validated_data = $request->validate($request, [
+        $validated_data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
 
-        // //create a user
-        $user = User::create($validated_data);
-        return redirect(route('dashboard.index'));
+        //create a project
+        $user = Project::create($validated_data);
+
+        //flash and redirect
+        session()->flash('message', 'New project created!');
+        return redirect(route('layouts.dashboard'));
     }
 
     /**
