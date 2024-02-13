@@ -21,7 +21,7 @@ class EntityFactory extends Factory
             'description' => "",
             'table_name' => fake()->sentence(3),
             'is_private' => false,
-            'build_id' => 1
+            'project_id' => 1
         ];
     }
 }

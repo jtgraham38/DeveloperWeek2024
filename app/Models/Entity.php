@@ -20,7 +20,7 @@ class Entity extends Model
         'description',
         'table_name',
         'is_private',   //user's can only access instances of this entity that they own
-        'build_id'
+        'project_id'
     ];
 
     public function routes()

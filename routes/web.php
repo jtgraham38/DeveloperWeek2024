@@ -33,10 +33,10 @@ Route::get('/login', function() {
     return view('login');
 });
 
-Route::get('/builds/{build_id}/entities', [ EntityController::class, 'index' ]);
-Route::get('/builds/{build_id}/create-entity', [ EntityController::class, 'create' ]);
-Route::post('/builds/{build_id}/create-entity', [ EntityController::class, 'store' ]);
-Route::get('/builds/{build_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('entity.show');
+Route::get('/projects/{project_id}/entities', [ EntityController::class, 'index' ])->name('dashboard.view-project');
+Route::get('/projects/{project_id}/create-entity', [ EntityController::class, 'create' ])->name('dashboard.create-entity');
+Route::post('/projects/{project_id}/create-entity', [ EntityController::class, 'store' ])->name('dashboard.store-entity');
+Route::get('/projects/{project_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('dashboard.show-entity');
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([

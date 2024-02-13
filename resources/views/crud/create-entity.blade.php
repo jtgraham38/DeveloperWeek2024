@@ -1,9 +1,7 @@
-@extends("layouts.dashboard")
-@section("body")
 <div class="relative sm:flex sm:justify-center sm:items-center bg-dots-darker bg-center text-white">
     <div class="max-w-7xl mx-auto p-6 lg:p-8">
         <div class="sm:columns-1 gap-6 lg:gap-8">
-            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="/builds/{{$build_id}}/create-entity" method="post">
+            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="{{ route("dashboard.store-entity", [ $project_id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
@@ -28,12 +26,12 @@
                 {{-- Alpine-powered row duplication --}}
                 <template x-for="i in rows">
                     <div class="grid grid-cols-2 gap-1 gap-x-2">
-                            <select name="column-datatype" id="columns-datatype">
+                            <select name="column-datatype" id="columns-datatype" required>
                                 <option value="int">int</option>
                                 <option value="varchar">varchar</option>
                                 <option value="bool">bool</option>
                             </select>
-                            <input type="text" name="column-name" id="columns-name" />
+                            <input type="text" name="column-name" id="columns-name" required>
                     </div>
                 </template>
                 <div class="items-start">
@@ -52,4 +50,3 @@ function update_table_name(){
     document.getElementById("table-name").value = document.getElementById("entity-name").value.toLowerCase().replaceAll(" ", "_");
 }
 </script>
-@endsection

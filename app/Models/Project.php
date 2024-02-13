@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Entity;
 use App\Models\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {

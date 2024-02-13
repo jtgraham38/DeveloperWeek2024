@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Build;
 use App\Models\Entity;
+use App\Models\Project;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
@@ -39,8 +39,8 @@ class DatabaseSeeder extends Seeder
             Log::info("Test User 2 already exists, skipping.");
         }
 
-        Build::factory()->create([
-            'name' => 'Test build',
+        Project::factory()->create([
+            'name' => 'Test project',
             'description' => 'Default description',
             'user_id' => 1
         ]);
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Default description',
             'table_name' => 'test_entity',
             'is_private' => false,
-            'build_id' => 1
+            'project_id' => 1
         ]);
     }
 }

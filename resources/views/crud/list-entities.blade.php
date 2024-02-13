@@ -1,9 +1,7 @@
-@extends("layouts.dashboard")
-@section("body")
 <div class="flex flex-col gap-4">
-    <h3>{{ $build->name }} entities</h3>
+    <h3>{{ $project->name }} entities</h3>
     <div class="flex-col">
-        <a href="/builds/{{$build->id}}/create-entity" class="primary_btn">+ Add entity</a>
+        <div hx-get="{{ route("dashboard.create-entity", [ $project->id ]) }} hx-target="#dashboard_body" hx-indicator="#dashboard_loader" class="primary_btn"><i class="fa fa-plus"></i> Add entity</div>
     </div>
     <div class="flex flex-row columns-6">
         @foreach ($data as $item)
@@ -15,4 +13,3 @@
         @endforeach
     </div>
 </div>
-@endsection
