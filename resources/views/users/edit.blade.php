@@ -4,47 +4,51 @@
         <hr>
         @csrf
         @method('PUT')
-        <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
-            <div class="sm:col-span-4">
-                <label for="name" class="block">First Name:</label>
-                <input type="text" name="first_name" value="{{$user->first_name}}" placeholder="First Name" class="p-1 block" maxlength="255" required>
-            </div>
-            <div class="sm:col-span-4">
-                <label for="name" class="block">Last Name:</label>
-                <input type="text" name="last_name" value="{{$user->last_name}}" placeholder="Last Name" class="p-1" maxlength="255" required>
-            </div>
-        
-            <div class="sm:col-span-4">
-                <label for="name" class="block">Email:</label>
-                <input type="email" name="email" value="{{$user->email}}" placeholder="Email" class="p-1" maxlength="255" required>
+        <div>
+            <div class="flex flex-row">
+                <div class="mr-4">
+                    <label for="name" class="block">First Name:</label>
+                    <input type="text" name="first_name" value="{{$user->first_name}}" placeholder="First Name" class="p-1 block" maxlength="255" required>
+                </div>
+                <div>
+                    <label for="name" class="block">Last Name:</label>
+                    <input type="text" name="last_name" value="{{$user->last_name}}" placeholder="Last Name" class="p-1" maxlength="255" required>
+                </div>
             </div>
         
-            <div class="sm:col-span-4">
-                <label for="phone_number" class="block">Phone:</label>
-                <input type="tel" name="phone_number" value="{{$user->phone_number}}" placeholder="Phone" class="p-1" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+            <div class="flex flex-row">
+                <div class="mr-4">
+                    <label for="name" class="block">Email:</label>
+                    <input type="email" name="email" value="{{$user->email}}" placeholder="Email" class="p-1" maxlength="255" required>
+                </div>
+            
+                <div class="">
+                    <label for="phone_number" class="block">Phone:</label>
+                    <input type="tel" name="phone_number" value="{{$user->phone_number}}" placeholder="Phone" class="p-1" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                </div>
             </div>
         
-        
+            <br>
 
-
-
-            <div class="sm:col-span-4 gap-y-4">
-                <div class="sm:col-span-4">
-                    <label for="street_address"  class="block">Street Address:</label>
-                    <input type="text" name="street_address" value="{{$user->street_address}}" placeholder="Street Address" class="p-1" maxlength="255" required>
+            <div class="">
+                <div class="flex flex-row">
+                    <div class="mr-4">
+                        <label for="street_address"  class="block">Street Address:</label>
+                        <input type="text" name="street_address" value="{{$user->street_address}}" placeholder="Street Address" class="p-1" maxlength="255" required>
+                    </div>
+            
+                    <div class="">
+                        <label for="apt" class="block">Apt, suite, etc.:</label>
+                        <input type="text" name="apt" value="{{$user->apt}}" placeholder="Apartment Number" class="p-1" maxlength="255">
+                    </div>
                 </div>
         
-                <div class="sm:col-span-4">
-                    <label for="apt" class="block">Apt, suite, etc.:</label>
-                    <input type="text" name="apt" value="{{$user->apt}}" placeholder="Apartment Number" class="p-1" maxlength="255">
-                </div>
-        
-                <div class="sm:col-span-4">
-                    <label for="city" class="block">City:</label>
-                    <input type="text" name="city" value="{{$user->city}}" placeholder="City" class="p-1" maxlength="255" required>
-                </div>
-        
-                <div class="sm:col-span-4">
+                <div class="flex flex-row">
+                    <div class="mr-4">
+                        <label for="city" class="block">City:</label>
+                        <input type="text" name="city" value="{{$user->city}}" placeholder="City" class="p-1" maxlength="255" required>
+                    </div>
+            
                     <div class="inline-block text-zinc-900">
                         <label class="text-zinc-200 block" for="state">State:</label>
                         <select name="state" class="p-1" required>
@@ -112,11 +116,11 @@
                             
                         </select>
                     </div>
-        
-                    <div class="sm:col-span-4">
-                        <label for="zip_code" class="block">ZIP Code:</label>
-                        <input type="text" name="zip_code" value="{{$user->zip_code}}" placeholder="ZIP Code" class="p-1" maxlength="255" required>
-                    </div>
+                </div>
+
+                <div class="">
+                    <label for="zip_code" class="block">ZIP Code:</label>
+                    <input type="text" name="zip_code" value="{{$user->zip_code}}" placeholder="ZIP Code" class="p-1" maxlength="255" required>
                 </div>
             </div>
         </div>
