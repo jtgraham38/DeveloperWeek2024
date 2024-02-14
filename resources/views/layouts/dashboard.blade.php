@@ -78,7 +78,7 @@
     <br>
     <br>
 
-    <div class="container mx-auto px-4 ml-44 mr-4" hx-get="{{ isset($project) ? route('projects.show', ['project'=>$project]) : route('projects.index') }}" hx-target="#dashboard_body" hx-trigger="load">
+    <div class="mx-auto px-4 ml-44 mr-4" hx-get="{{ isset($project) ? route('projects.show', ['project'=>$project]) : route('projects.index') }}" hx-target="#dashboard_body" hx-trigger="load">
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="p-3 text-zinc-200">
