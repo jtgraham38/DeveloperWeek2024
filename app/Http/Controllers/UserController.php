@@ -34,18 +34,22 @@ class UserController extends Controller
     {
 
         //validate user input
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+
+        $validated_data = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+            'phone_number' => 'nullable|string|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'street_address' => 'required|string|max:255',
+            'apt' => 'nullable|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|min:2|max:2',
+            'zip_code' => 'required|string|regex:/^\d{5}$/',
             'password' => 'required|string|min:6|confirmed', //'confirmed' checks if 'password_confirmation' matches 'password'
         ]);
 
         //create a user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        $user = User::create($validated_data);
 
         //log the user in
         auth()->login($user);
@@ -67,7 +71,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return view('users.edit');
+        //find the user
+        $user=User::findOrFail($id);
+
+        return view('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -75,7 +82,42 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //validate user input
+        $validated_data = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+            'phone_number' => 'nullable|string|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'street_address' => 'required|string|max:255',
+            'apt' => 'nullable|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|min:2|max:2',
+            'zip_code' => 'required|string|regex:/^\d{5}$/'
+        ]);
+
+        //generate address
+        $address = implode('', [
+            $request->input('street_address'),
+            $request->input('apt'),
+            $request->input('city'),
+            $request->input('state'),
+            $request->input('zip_code'),
+        ]);
+        $validated_data['billing_address'] = $address;
+
+        //find the user
+        $user = User::findOrFail($id);
+
+        //ensure the user is authenticated
+        if (auth()->id() != $user->id){
+            abort(403);
+        }
+
+        //update the user
+        $user->update($validated_data);
+
+        //redirect to homepage
+        return redirect()->route('projects.none_selected');
     }
 
     /**
