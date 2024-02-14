@@ -1,4 +1,4 @@
-<form action="{{ route('projects.store')}}" method="POST" prompt="Sign Up">
+<form action="{{ route('projects.store')}}" method="POST">
     <h3>Create Project</h3>
     <hr>
     @csrf
@@ -7,11 +7,21 @@
         <input type="text" name="name" placeholder="Name" class="p-1" maxlength="255" required>
     </div>
     <div class="flex flex-col">
-        <label for="name">Description:</label>
-        <input type="text" name="description" placeholder="Description" class="p-1" maxlength="255" required>
+        <label for="name" class="block">Description:</label>
+        <textarea type="text" name="description" placeholder="Enter project description here..." class="p-1 block text-zinc-900" maxlength="255" required></textarea>
     </div>
 
-    <br>
+    <div class="text-zinc-900">
+        <label class="text-zinc-200 block" for="state">Database Type:</label>
+        <select name="db_type" class="p-1" required>
 
-    <button class="primary_btn"  type="submit">Create Project</button>
+            <option class="text-zinc-200" value="0" disabled selected>Choose a database integration...</option>
+            <option value="mysql">MySQL</option>
+            <option value="sqlite">SQLite</option>
+            <option value="sql_server">SQL Server</option>
+            <option value="postgresql">PostgreSQL</option> 
+        </select>
+    </div>
+
+    <button class="primary_btn mt-2"  type="submit">Create Project</button>
 </form>

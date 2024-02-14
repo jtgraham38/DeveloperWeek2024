@@ -47,13 +47,14 @@ Route::resource('users', UserController::class)->only([
 //resource routes for managing projects
 
 Route::resource('projects', ProjectController::class)->only([
-    'store', 'destroy',
+    'store', 'destroy', 'update',
     'index', 'edit', 'show' //these are all partial templates to be shown in the dashboard body
 ])->middleware([Authenticate::class]);
 
 Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
 Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
 Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
+//must use _ above to avoid route conflicts
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
