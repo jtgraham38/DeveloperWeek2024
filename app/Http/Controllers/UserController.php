@@ -95,15 +95,6 @@ class UserController extends Controller
             'zip_code' => 'required|string|regex:/^\d{5}$/'
         ]);
 
-        //generate address
-        $address = implode('', [
-            $request->input('street_address'),
-            $request->input('apt'),
-            $request->input('city'),
-            $request->input('state'),
-            $request->input('zip_code'),
-        ]);
-        $validated_data['billing_address'] = $address;
 
         //find the user
         $user = User::findOrFail($id);

@@ -17,6 +17,7 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
+        'db_type',
         'user_id'
     ];
 
