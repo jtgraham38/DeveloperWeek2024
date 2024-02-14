@@ -36,6 +36,7 @@ class ProjectController extends Controller
         $validated_data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'db_type' => 'required|string|max:255'
         ]);
 
         //create a project
@@ -90,15 +91,25 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validated_data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'db_type' => 'required|string|max:255'
+        ]);
+
         //get project
         $project = Project::findOrFail($id);
 
         //check if project is owned by user
-        if (request()->user()->cannot('update', $project)) {
+        if (auth()->user()->cannot('update', $project)) {
             abort(403);
         }
 
+        //update project
+        $project->update($validated_data);
+
         //return view
+        return redirect()->route('projects.edit', ['project' => $project]);
     }
 
     /**

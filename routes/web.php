@@ -33,7 +33,7 @@ Route::resource('users', UserController::class)->only([
 //resource routes for managing projects
 
 Route::resource('projects', ProjectController::class)->only([
-    'store', 'destroy',
+    'store', 'destroy', 'update',
     'index', 'edit', 'show' //these are all partial templates to be shown in the dashboard body
 ])->middleware([Authenticate::class]);
 
