@@ -40,6 +40,7 @@ Route::resource('projects', ProjectController::class)->only([
 Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
 Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
 Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
+//must use _ above to avoid route conflicts
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');

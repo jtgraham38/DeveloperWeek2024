@@ -1,4 +1,4 @@
-<form action="{{ route('users.store')}}" method="POST" prompt="Sign Up">
+<form action="{{ route('users.store')}}" method="POST">
     <h3>Sign Up</h3>
     <hr>
     @csrf
