@@ -9,6 +9,7 @@ use App\Models\Project;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
@@ -20,37 +21,63 @@ class DatabaseSeeder extends Seeder
     {
         try {
             User::factory()->create([
-                'name' => 'Test User',
                 'email' => 'test1@example.com',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'billing_address' => '',
+                'phone_number' => '1234567890',
+                'role' => 0,
+                'street_address' => '',
+                'apt' => '',
+                'city' => '',
+                'state' => '',
+                'zip_code' => ''
             ]);
         } catch (UniqueConstraintViolationException $e) {
-            Log::info("Test User already exists, skipping.");
+            $this->command->info("Test User already exists, skipping.");
         }
 
         try {
             User::factory()->create([
-                'name' => 'Test User 2',
                 'email' => 'test2@example.com',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'first_name' => 'Test',
+                'last_name' => 'User 2',
+                'billing_address' => '',
+                'phone_number' => '0987654321',
+                'role' => 0,
+                'street_address' => '',
+                'apt' => '',
+                'city' => '',
+                'state' => '',
+                'zip_code' => ''
             ]);
         }
         catch (UniqueConstraintViolationException $e) {
-            Log::info("Test User 2 already exists, skipping.");
+            $this->command->info("Test User 2 already exists, skipping.");
         }
 
-        Project::factory()->create([
-            'name' => 'Test project',
-            'description' => 'Default description',
-            'user_id' => 1
-        ]);
+        if (count(DB::table('projects')->where('name', '=', 'Test project')->where('user_id', '=', 1)->get()) != 0) {
+            $this->command->info("Test project already exists, skipping.");
+        } else {
+            Project::factory()->create([
+                'name' => 'Test project',
+                'description' => 'Default description',
+                'user_id' => 1
+            ]);
+        }
 
-        Entity::factory()->create([
-            'name' => 'Test entity',
-            'description' => 'Default description',
-            'table_name' => 'test_entity',
-            'is_private' => false,
-            'project_id' => 1
-        ]);
+        if (count(DB::table('entities')->where('name', '=', 'Test entity')->where('project_id', '=', 1)->get()) != 0) {
+            $this->command->info("Test entity already exists, skipping.");
+        } else {
+            Entity::factory()->create([
+                'name' => 'Test entity',
+                'description' => 'Default description',
+                'table_name' => 'test_entity',
+                'is_private' => false,
+                'project_id' => 1
+            ]);
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entity;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -15,14 +16,13 @@ class EntityController extends Controller
     public function index($project_id)
     {
         $project = DB::table('projects')->where('id', '=', $project_id)->get();
-        if (count($project) != 1) {
-            abort(404);
+        if (!reset($project)) {
+            return [];
         }
-        $project = $project[0];
-        return view('crud.list-entities', [
-            'data' => DB::table('entities')->where('project_id', '=', $project_id)->get(),
-            'project' => $project
-        ]);
+
+        $project = $project->first();
+
+        return DB::table('entities')->where('project_id', '=', $project_id)->get();
     }
 
     /**
@@ -30,8 +30,15 @@ class EntityController extends Controller
      */
     public function create($project_id)
     {
-        return view('crud.create-entity', [
-            'project_id' => $project_id
+        $project = DB::table('projects')->where('id', '=', $project_id)->get();
+        if (!reset($project)) {
+            abort(404);
+        }
+
+        $project = $project->first();
+
+        return view('entity.create-entity', [
+            'project' => $project
         ]);
     }
 
@@ -42,7 +49,7 @@ class EntityController extends Controller
     {
         $entity = DB::table('entities')->insertGetId([
             'name' => $request->get('entity-name'),
-            'description' => $request->get('table-description'),
+            'description' => $request->get('entity-description'),
             'table_name' => $request->get('table-name'),
             'is_private' => $request->get('is-private'),
             'project_id' => $project_id
@@ -64,7 +71,7 @@ class EntityController extends Controller
                 'entity_id' => $entity,
             ]);
         }
-        return route('dashboard.show-entity', [ $project_id, $entity ]);
+        return route('projects.edit', [ $project_id ]);
     }
 
     /**
@@ -76,7 +83,7 @@ class EntityController extends Controller
         if (count($entity) != 1) {
             abort(404);
         }
-        return view('crud.show-entity', [
+        return view('entity.show-entity', [
             'data' => $entity,
             'project_id' => $project_id
         ]);

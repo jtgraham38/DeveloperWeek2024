@@ -1,7 +1,10 @@
+@extends("layouts.main")
+@section("template")
 <div class="relative sm:flex sm:justify-center sm:items-center bg-dots-darker bg-center text-white">
     <div class="max-w-7xl mx-auto p-6 lg:p-8">
         <div class="sm:columns-1 gap-6 lg:gap-8">
-            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="{{ route("dashboard.store-entity", [ $project_id ]) }}" method="post">
+            <h3>Create entity for {{ $project->name }}</h3>
+            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="{{ route("dashboard.store-entity", [ $project->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
@@ -38,7 +41,10 @@
                     <button type="button" @click="rows++" class="secondary_btn">Add column</button>
                     <button type="button" @click="rows > 1 && rows--" class="secondary_btn">Remove column</button>
                 </div>
-
+                <div class="flex items-center gap-2 py-2">
+                    <input type="checkbox" class="mb-0" name="is-private" id="is-private">
+                    <label for="is-private">Private?</label>
+                </div>
                 <button type="submit" class="primary_btn">Submit</button>
             </form>
         </div>
@@ -50,3 +56,4 @@ function update_table_name(){
     document.getElementById("table-name").value = document.getElementById("entity-name").value.toLowerCase().replaceAll(" ", "_");
 }
 </script>
+@endsection
