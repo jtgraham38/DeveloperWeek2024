@@ -75,21 +75,6 @@ class EntityController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($project_id, Entity $entity)
-    {
-        $entity = DB::table('entities')->where('id', '=', $entity)->where('project_id', '=', $project_id)->get();
-        if (count($entity) != 1) {
-            abort(404);
-        }
-        return view('entity.show-entity', [
-            'data' => $entity,
-            'project_id' => $project_id
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Entity $entity)
