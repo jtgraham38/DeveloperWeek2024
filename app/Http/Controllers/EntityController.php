@@ -6,7 +6,7 @@ use App\Models\Entity;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Illuminate\Support\Facades\Log;
 
 class EntityController extends Controller
 {
@@ -47,28 +47,29 @@ class EntityController extends Controller
      */
     public function store($project_id, Request $request)
     {
+        $input = $request->all();
+
         $entity = DB::table('entities')->insertGetId([
-            'name' => $request->get('entity-name'),
-            'description' => $request->get('entity-description'),
-            'table_name' => $request->get('table-name'),
-            'is_private' => $request->get('is-private'),
+            'name' => $input['entity-name'],
+            'description' => $input['entity-desc'],
+            'table_name' => $input['table-name'],
+            'is_private' => $request->has('is-private') ? true : false,
             'project_id' => $project_id
         ]);
-        $entity_attribute_type = [];
-        $request->collect('column-datatype')->each(function(string $type) {
-            $entity_attribute_type[] = $type;
-        });
-        $entity_attribute_name = [];
-        $request->collect('column-name')->each(function(string $name) {
-            $entity_attribute_name[] = $name;
-        });
-        foreach ($entity_attribute_name as $i => $name) {
+        $datatype_key = 'column-datatype-';
+        $name_key = 'column-name-';
+        $column_is_key_key = 'column-is-key-';
+        $column_is_foreign_key_key = 'column-is-foreign-key-';
+
+        $rows = $request->integer('row-count');
+
+        for ($i = 1; $i <= $rows; $i++) {
             DB::table('entity_attributes')->insert([
-                'name' => $name,
-                'type' => $entity_attribute_type[$i],
-                'is_key' => false,
-                'is_foreign' => false,
-                'entity_id' => $entity,
+                'type' => $input[$datatype_key.$i],
+                'name' => $input[$name_key.$i],
+                'is_key' => $request->has($column_is_key_key.$i) ? true : false,
+                'is_foreign' => $request->has($column_is_foreign_key_key.$i) ? true : false,
+                'entity_id' => $entity
             ]);
         }
         return route('projects.edit', [ $project_id ]);
