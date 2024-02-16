@@ -72,7 +72,7 @@ class EntityController extends Controller
                 'entity_id' => $entity
             ]);
         }
-        return route('projects.edit', [ $project_id ]);
+        return redirect()->route('projects.edit', [ $project_id ]);
     }
 
     /**
