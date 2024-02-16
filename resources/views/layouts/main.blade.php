@@ -6,15 +6,14 @@
 
         <title>@yield('title')</title>
 
-        @vite('resources/css/fonts.css')
-        @vite('resources/css/style.css')
+        @vite(['resources/css/fonts.css', 'resources/css/style.css'])
         <script src="https://kit.fontawesome.com/838b689285.js" crossorigin="anonymous"></script>
 
         <script src="https://unpkg.com/alpinejs" defer></script>
         <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 
     </head>
-    <body>
+    <body class="h-full">
         <header class="menu p-3 mb-3 flex flex-row justify-end">
             <div class="flex">
                 @guest

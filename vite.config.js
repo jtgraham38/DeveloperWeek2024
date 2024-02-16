@@ -9,7 +9,7 @@ export default defineConfig({
             'resources/css/fonts.css',
             'resources/js/app.js'
         ],
-            refresh: true,
+        refresh: true,
         }),
     ],
 });
