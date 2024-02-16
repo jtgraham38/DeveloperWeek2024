@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('table_name');
+            $table->string('singular_name');
             $table->boolean('is_private')->default(false);    //user can only access their instances of this entity
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
