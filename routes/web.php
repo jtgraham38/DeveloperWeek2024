@@ -33,8 +33,6 @@ Route::get('/login', function() {
     return view('login');
 });
 
-Route::get('/projects/{project_id}/entities', [ EntityController::class, 'index' ])->name('dashboard.view-project');
-Route::get('/projects/{project_id}/create-entity', [ EntityController::class, 'create' ])->name('dashboard.create-entity');
 Route::post('/projects/{project_id}/create-entity', [ EntityController::class, 'store' ])->name('dashboard.store-entity');
 Route::get('/projects/{project_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('dashboard.show-entity');
 

@@ -59,7 +59,11 @@ form {
 }
 
 select {
-    @apply rounded bg-dark-gray p-2;
+    @apply rounded bg-dark-gray p-2 h-full;
+}
+
+input[type="checkbox"] {
+    @apply h-4 self-center;
 }
 
 input, textarea {
