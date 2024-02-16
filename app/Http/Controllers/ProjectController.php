@@ -160,4 +160,32 @@ class ProjectController extends Controller
     public function none_selected(){
         return view('layouts.dashboard');
     }
+
+    //generate routes, then use it to build an api of the approprite type
+    public function build(string $id){
+
+        //get project
+        $project = Project::findOrFail($id);
+
+        //check if project is owned by user
+        if (request()->user()->cannot('build', $project)) {
+            abort(403);
+        }
+
+        //render app.py
+        $rendered_app = view('_api_builds.flask.app', ['project' => $project])->render();
+
+        //render database.py
+        $rendered_database = view('_api_builds.flask.database', ['project' => $project])->render();
+
+        //render schema.py
+        $rendered_schema = view('_api_builds.flask.schema', ['project' => $project])->render();
+
+        //make app.py, database.py, schema.py, and requirements.txt downloadable
+
+        //return view
+
+        dd($rendered_schema);
+        return $rendered_app;
+    }
 }

@@ -47,3 +47,7 @@
         </div>
     </div>
 </div>
+
+<div class="flex justify-center w-full mt-2">
+    <a href="{{route('projects.build', ['project'=>$project])}}" class="primary_btn p-2">Build Project</a>
+</div>

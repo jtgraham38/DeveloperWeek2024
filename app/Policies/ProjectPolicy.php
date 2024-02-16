@@ -15,6 +15,11 @@ class ProjectPolicy
         //
     }
 
+    public function build(User $user, Project $project): bool
+    {
+        return $user->id === $project->user_id;
+    }
+
     public function update(User $user, Project $project): bool
     {
         return $user->id === $project->user_id;
