@@ -40,6 +40,14 @@
             <div>
                 <h5>Edit</h5>
                 <hr>
+                <div 
+                    class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
+                    hx-get="{{ route('projects.show', ['project'=>$project]) }}"
+                    hx-target="#dashboard_body"
+                    hx-indicator="#dashboard_loader"
+                >
+                    <span class="cursor-default">Overview</span>
+                </div>
                 <div
                     class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
                     hx-get="{{ route('projects.editor', ['project'=>$project]) }}"

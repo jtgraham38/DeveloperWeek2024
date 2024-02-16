@@ -17,6 +17,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('output_type')->default('flask');    //flask, fastapi, etc.
             $table->string('db_type')->nullable();     //ex. mysql, postgresql, sqlite, etc.
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

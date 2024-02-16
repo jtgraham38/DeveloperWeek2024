@@ -19,6 +19,7 @@ class Entity extends Model
         'name',
         'description',
         'table_name',
+        'singular_name',
         'is_private',   //user's can only access instances of this entity that they own
         'build_id'
     ];

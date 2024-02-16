@@ -23,5 +23,13 @@
         </select>
     </div>
 
+    <div class="text-zinc-900">
+        <label class="text-zinc-200 block" for="state">Output Type:</label>
+        <select name="output_type" class="p-1" required>
+            <option class="text-zinc-200" value="0" disabled selected>Choose an output api type...</option>
+            <option value="flask">Flask</option>
+        </select>
+    </div>
+
     <button class="primary_btn mt-2"  type="submit">Create Project</button>
 </form>

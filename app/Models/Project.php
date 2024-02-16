@@ -18,6 +18,7 @@ class Project extends Model
         'name',
         'description',
         'db_type',
+        'output_type',
         'user_id'
     ];
 
