@@ -1,5 +1,5 @@
 <form action="{{ route('login') }}" method="POST">
-    <h3>Login</h3>
+    <h3 class="mb-2">Login</h3>
     <hr>
     @csrf
     <div class="flex flex-col">
@@ -11,7 +11,5 @@
         <input type="password" name="password" placeholder="Password" class="p-1" required>
     </div>
 
-    <br>
-
-    <button class="primary_btn" type="submit">Login</button>
+    <button class="primary_btn w-full" type="submit">Login</button>
 </form>

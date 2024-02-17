@@ -65,8 +65,10 @@ class ProjectController extends Controller
             abort(403);
         }
 
+        $data = app("App\Http\Controllers\EntityController")->index($id);
+
         //return view
-        return view('projects.show', ['project' => $project]);
+        return view('projects.show', ['project' => $project, 'data' => $data]);
     }
 
     /**
@@ -74,7 +76,7 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        
+
         //get project
         $project = Project::findOrFail($id);
 
