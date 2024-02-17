@@ -28,7 +28,7 @@
 
         <h5>Entities</h5>
         <div class="px-2">
-            Entity summary here.
+            @include("entity.list-entities")
         </div>
     </div>
 

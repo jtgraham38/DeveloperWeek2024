@@ -112,7 +112,5 @@
         <input type="password" name="password_confirmation" placeholder="Confirm Password" class="p-1" minlength="6" required>
     </div>
 
-    <br>
-
-    <button class="primary_btn"  type="submit">Sign Up</button>
+    <button class="primary_btn w-full"  type="submit">Sign Up</button>
 </form>

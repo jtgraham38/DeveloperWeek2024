@@ -34,7 +34,7 @@
 
             </details>
         </div>
-        
+
         <br>
         @if(isset($project))
             <div>
@@ -52,11 +52,11 @@
                     class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
                     hx-get="{{ route('projects.editor', ['project'=>$project]) }}"
                     hx-target="#dashboard_body"
-                    hx-indicator="#dashboard_loader"    
+                    hx-indicator="#dashboard_loader"
                 >
                     <span class="cursor-default">Editor</span>
                 </div>
-                <div 
+                <div
                     class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
                     hx-get="{{ route('projects.settings', ['project'=>$project]) }}"
                     hx-target="#dashboard_body"
@@ -71,7 +71,7 @@
             <div>
                 <h5>Account</h5>
                 <hr>
-                <div 
+                <div
                     class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
                     hx-get="{{ route('users.edit', ['user'=>auth()->user()]) }}"
                     hx-target="#dashboard_body"
@@ -90,9 +90,9 @@
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="p-3 text-zinc-200">
-            
+
         </div>
     </div>
 
-    
+
 @endsection

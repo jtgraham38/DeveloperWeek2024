@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EntityController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
@@ -23,6 +24,17 @@ use App\Models\Project;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/create', function() {
+    return view('build-table');
+});
+
+Route::get('/login', function() {
+    return view('login');
+});
+
+Route::post('/projects/{project_id}/create-entity', [ EntityController::class, 'store' ])->name('dashboard.store-entity');
+Route::get('/projects/{project_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('dashboard.show-entity');
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([

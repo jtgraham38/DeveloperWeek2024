@@ -1,4 +1,5 @@
-
+@extends("layouts.main")
+@section("template")
 @auth
     <div class="decoration-sky-500/30">
         <p>Welcome, {{ auth()->user()->name }}</p>
@@ -42,3 +43,4 @@
         </div>
     </div>
 @endauth
+@endsection
