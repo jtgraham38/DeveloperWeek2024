@@ -52,6 +52,7 @@ class EntityController extends Controller
         $entity = DB::table('entities')->insertGetId([
             'name' => $input['entity-name'],
             'description' => $input['entity-desc'],
+            'singular_name' => $input['singular-name'],
             'table_name' => $input['table-name'],
             'is_private' => $request->has('is-private') ? true : false,
             'project_id' => $project_id
