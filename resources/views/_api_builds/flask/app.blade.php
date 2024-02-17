@@ -4,8 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from marshmallow.exceptions import ValidationError
 from marshmallow_sqlalchemy import fields
 
-from database import db, seed_db, User, Product, Order
-from schema import UserSchema, ProductSchema, OrderSchema
+from database import db, seed_db, {{ $project->entities->pluck('singular_name')->implode(', ') }}
+from schema import {{ $project->entities->pluck('singular_name')->implode('Schema, ') . "Schema" }}
+
 
 # identify the script directory to locate the database and helper files
 import os, sys
@@ -18,7 +19,7 @@ dbfile = os.path.join(scriptdir, "db.sqlite3")
 # configure this web application, and intialize it
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-app.config['SECRET_KEY'] = "correcthorsebatterystaple"
+app.config['SECRET_KEY'] = "{{ Illuminate\Support\Str::random(20) }}"
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{dbfile}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
@@ -32,11 +33,14 @@ def documentation():
 #api endpoint definition
 api_endpoint = "/api"
 
+
+@foreach($project->entities as $entity)
+
 #create route
-@app.post(api_endpoint + "/users")
-def users_create():
+@app.post(api_endpoint + "/{{ $entity->table_name }}")
+def {{ $entity->singular_name }}_create():
     #get schema
-    schema = UserSchema()
+    schema = {{ $entity->singular_name }}Schema()
 
     #validate input and create model, or return error
     try:
@@ -58,10 +62,10 @@ def users_create():
     return jsonify(response)
 
 #get listing route
-@app.get(api_endpoint + "/users")
-def users_index():
+@app.get(api_endpoint + "/{{ $entity->table_name }}")
+def {{ $entity->singular_name }}_index():
     #get record ids
-    index = User.query.all()
+    index = {{ $entity->singular_name }}.query.all()
     ids = [ model.id for model in index]
 
     #assemble result
@@ -73,13 +77,15 @@ def users_index():
 
     #return result
     return jsonify(response)
+    
+
 
 #get specific route
-@app.get(api_endpoint + "/users/<id>")
-def users_get(id):
-    #get record and schema
-    model = User.query.get(id)
-    schema = UserSchema()
+@app.get(api_endpoint + "/{{ $entity->table_name }}/<id>")
+def {{ $entity->singular_name }}_get(id):
+#get record and schema
+    model = {{ $entity->singular_name }}.query.get(id)
+    schema = {{ $entity->singular_name }}Schema()
 
     #return 404 if not found
     if not model:
@@ -98,11 +104,11 @@ def users_get(id):
     return jsonify(response)
 
 #update route
-@app.route(api_endpoint + "/users/<id>", methods=["PUT", "PATCH"])
-def users_update(id):
+@app.route(api_endpoint + "/{{ $entity->table_name }}/<id>", methods=["PUT", "PATCH"])
+def {{ $entity->singular_name }}_update(id):
     #get record and schema
-    model = User.query.get(id)
-    schema = UserSchema()
+    model = {{ $entity->singular_name }}.query.get(id)
+    schema = {{ $entity->singular_name }}Schema()
 
     #return 404 if not found
     if not model:
@@ -136,12 +142,12 @@ def users_update(id):
     #return message and result
     return jsonify(response)
 
-#delete route
-@app.route(api_endpoint + "/users/<id>", methods=["DELETE"])
-def users_delete(id):
+    #delete route
+@app.route(api_endpoint + "/{{ $entity->table_name }}/<id>", methods=["DELETE"])
+def {{ $entity->singular_name }}_delete(id):
     #get record and schema
-    model = User.query.get(id)
-    schema = UserSchema()
+    model = {{ $entity->singular_name }}.query.get(id)
+    schema = {{ $entity->singular_name }}Schema()
 
     #return 404 if not found
     if not model:
@@ -162,6 +168,8 @@ def users_delete(id):
 
     #return response
     return jsonify(response)
+
+@endforeach
 
 
 if __name__ == '__main__':
