@@ -168,7 +168,7 @@ class ProjectController extends Controller
     public function build(string $id){
 
         //get project
-        $project = Project::findOrFail($id);
+        $project = Project::with('entities.attributes')->findOrFail($id);
 
         //check if project is owned by user
         if (request()->user()->cannot('build', $project)) {
