@@ -75,6 +75,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Test entity',
                 'description' => 'Default description',
                 'table_name' => 'test_entity',
+                'singular_name' => 'test entity',
                 'is_private' => false,
                 'project_id' => 1
             ]);

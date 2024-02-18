@@ -90,7 +90,7 @@
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="p-3 text-zinc-200">
-
+            @yield("body")
         </div>
     </div>
 
