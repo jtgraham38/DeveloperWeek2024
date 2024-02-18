@@ -17,8 +17,9 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $build->created_at->format('Y-m-d') }}</td>
                 <td>
-                    <form action="#">
+                    <form action="{{ route('builds.destroy', ['build'=>$build]) }}" method="POST">
                         @csrf
+                        @method('DELETE')
                         <button type="submit">
                             <i class="fa-solid fa-trash"></i>
                         </button>

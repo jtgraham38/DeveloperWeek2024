@@ -20,7 +20,7 @@ class BuildPolicy
         return $user->id === $build->project->user_id;
     }
 
-    public function delete(User $user, Project $project): bool
+    public function destroy(User $user, Build $build): bool
     {
         return $user->id === $build->project->user_id;
     }

@@ -72,7 +72,7 @@ class BuildController extends Controller
         }
 
         //locate files to zip, and name for zip
-        $zip_name = 'build_ ' . $build->id . '.zip';
+        $zip_name = 'build.zip';
 
         //make zip file
         $zip = new ZipArchive;
@@ -102,14 +102,21 @@ class BuildController extends Controller
     public function destroy(string $id)
     {
         //get buid
-        $build = Build::findOrFail($id);
+        $build = Build::with('project')->findOrFail($id);
 
         //check if build is owned by user
         if (request()->user()->cannot('destroy', $build)) {
             abort(403);
         }
 
+        //delete the folder with the build in it
+        Storage::deleteDirectory('builds/user_' . auth()->id() . '/build_' . $build->id);
+
+        //delete the db record
+        $build->delete();
+
         //return view
-        //TODO
+        session()->flash('message', 'Build deleted!');
+        return redirect()->route('projects.edit', ['project' => $build->project]);
     }
 }
