@@ -64,6 +64,14 @@
                 >
                     <span class="cursor-default">Settings</span>
                 </div>
+                <div
+                    class="my-1 px-2 hover:bg-slate-400 hover:bg-opacity-50 text-lg"
+                    hx-get="{{ route('projects.builds', ['project'=>$project]) }}"
+                    hx-target="#dashboard_body"
+                    hx-indicator="#dashboard_loader"
+                >
+                    <span class="cursor-default">Builds</span>
+                </div>
             </div>
             <br>
         @endif

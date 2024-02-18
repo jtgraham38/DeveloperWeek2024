@@ -17,10 +17,10 @@
     }
 
     .primary_btn{
-        @apply py-2 px-4 rounded text-black bg-gradient-to-tr from-primary-red to-primary-orange hover:from-primary-orange hover:to-primary-red hover:from-5%;
+        @apply text-zinc-200 bg-gradient-to-r from-orange-500 to-amber-400 hover:from-orange-700 hover:to-amber-600 py-2 px-4 rounded text-zinc-900
     }
     .secondary_btn{
-        @apply border-2 border-primary-red hover:border-primary-orange text-primary-red hover:text-primary-orange py-1 px-3 rounded
+        @apply border-2 border-orange-500 hover:border-orange-700 text-orange-500 hover:text-orange-700 py-2 px-4 rounded
     }
     .card{
         @apply bg-gray-800 shadow-lg text-zinc-200 rounded
