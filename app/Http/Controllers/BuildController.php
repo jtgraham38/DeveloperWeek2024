@@ -41,15 +41,16 @@ class BuildController extends Controller
         //render requirements.txt
         $rendered_requirements = view('_api_builds.flask.requirements', ['project' => $project])->render();
 
-        //make app.py, database.py, schema.py, and requirements.txt downloadable
-        Storage::disk('local')->put('builds/app.py', $rendered_app);
-        Storage::disk('local')->put('builds/database.py', $rendered_database);
-        Storage::disk('local')->put('builds/schema.py', $rendered_schema);
-        Storage::disk('local')->put('builds/requirements.txt', $rendered_requirements);
-
         //make the build record
         $build = Build::create($validated_data);
-        
+
+        //save app.py, database.py, schema.py, and requirements.txt to their appropriate directory
+        $save_path = 'builds/user_' . auth()->id() . '/build_' . $build->id . '/';
+        Storage::disk('local')->put($save_path . 'app.py', $rendered_app);
+        Storage::disk('local')->put($save_path . 'database.py', $rendered_database);
+        Storage::disk('local')->put($save_path . 'schema.py', $rendered_schema);
+        Storage::disk('local')->put($save_path . 'requirements.txt', $rendered_requirements);
+
         //return view
         dd($rendered_requirements);
         return $rendered_app;
