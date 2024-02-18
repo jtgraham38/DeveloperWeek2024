@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Entity;
 use App\Models\User;
+use App\Models\Build;
 
 class Project extends Model
 {
@@ -22,6 +23,10 @@ class Project extends Model
         'user_id'
     ];
 
+    public function builds()
+    {
+        return $this->hasMany(Build::class);
+    }
     public function entities()
     {
         return $this->hasMany(Entity::class);

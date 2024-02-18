@@ -3,7 +3,7 @@
     <div class="flex flex-row columns-6 gap-4">
         @foreach ($entities as $entity)
         <div class="flex flex-col">
-            <p><b>{{ $entity->name }}</b></p>
+            <p><b>{{ $entity->display_name }}</b></p>
             <p>{{ $entity->description }}</p>
             <p>{{ $entity->table_name }}</p>
         </div>

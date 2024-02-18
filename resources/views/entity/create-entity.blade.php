@@ -1,4 +1,4 @@
-<div class="relative flex">
+<div class="relative flex card p-2">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
             <h4>Create entity</h4>
@@ -6,17 +6,22 @@
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
-                <p class="text-sm text-gray-400">The human-readable name for this table, e.g. 'My table'</p>
+                <p class="text-sm text-zinc-400">The human-readable name for this table, e.g. 'My table'</p>
                 <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()">
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
-                <textarea name="entity-desc" id="entity-desc" cols="30" rows="2"></textarea>
+                <textarea name="entity-desc" class="text-zinc-400" id="entity-desc" cols="30" rows="2"></textarea>
 
                 {{-- Table name --}}
                 <label for="table-name">Table name</label>
-                <p class="text-sm text-gray-400">The machine name for this table, e.g. 'my_table'</p>
+                <p class="text-sm text-zinc-400">The machine name for this table, e.g. 'my_table'</p>
                 <input type="text" name="table-name" id="table-name" x-text="table_name">
+
+                {{-- Table name --}}
+                <label for="table-name">Singular name</label>
+                <p class="text-sm text-zinc-400">Singular name for an entry in this table, used in instances like cacti/cactus, etc.</p>
+                <input type="text" name="singular-name" id="singular-name" x-text="singular_name">
 
                 {{-- Table columns --}}
                 <p>Table columns</p>

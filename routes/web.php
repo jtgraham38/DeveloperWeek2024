@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BuildController;
 
 use App\Http\Middleware\Authenticate;
 
@@ -54,8 +55,14 @@ Route::resource('projects', ProjectController::class)->only([
 Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
 Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
 Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
-Route::get('/_projects/{project}/build', [ProjectController::class, 'build'])->middleware([Authenticate::class])->name('projects.build');
+Route::get('/_projects/{project}/builds', [ProjectController::class, 'builds'])->middleware([Authenticate::class])->name('projects.builds');
 //must use _ above to avoid route conflicts
+
+//routes for managing builds
+Route::resource('builds', BuildController::class)->only([
+    'store', 'destroy'
+])->middleware([Authenticate::class]);
+Route::get('/_builds/{build}/download', [BuildController::class, 'download'])->middleware([Authenticate::class])->name('builds.download');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');

@@ -16,10 +16,11 @@ class Entity extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'display_name',
         'description',
         'table_name',
         'singular_name',
+        'multiple_name',
         'is_private',   //user's can only access instances of this entity that they own
         'project_id'
     ];
