@@ -53,7 +53,7 @@ Route::resource('projects', ProjectController::class)->only([
 Route::get('/dashboard', [ProjectController::class, 'none_selected'])->middleware([Authenticate::class])->name('projects.none_selected');
 Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'editor'])->middleware([Authenticate::class])->name('projects.editor');
 Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
-Route::get('/_projects/{project}/build', [ProjectController::class, 'build'])->middleware([Authenticate::class])->name('projects.build');
+Route::get('/_projects/{project}/builds', [ProjectController::class, 'builds'])->middleware([Authenticate::class])->name('projects.builds');
 //must use _ above to avoid route conflicts
 
 //routes for managing builds

@@ -163,4 +163,16 @@ class ProjectController extends Controller
         return view('layouts.dashboard');
     }
 
+    public function builds($id){
+        //get project
+        $project = Project::findOrFail($id);
+
+        //check if project is owned by user
+        if (request()->user()->cannot('update', $project)) {
+            abort(403);
+        }
+
+        return view('projects.builds', ['project' => $project]);
+    }
+
 }
