@@ -19,7 +19,7 @@ dbfile = os.path.join(scriptdir, "db.sqlite3")
 # configure this web application, and intialize it
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-app.config['SECRET_KEY'] = "{{ Illuminate\Support\Str::random(20) }}"
+app.config['SECRET_KEY'] = "{{ Illuminate\Support\Str::random(40) }}"
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{dbfile}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)

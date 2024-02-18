@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use ZipArchive;
 
 use App\Models\Build;
 use App\Models\Project;
@@ -56,16 +60,52 @@ class BuildController extends Controller
         return $rendered_app;
     }
 
+    //download a build
+    public function download(string $id)
+    {
+        //get buid
+        $build = Build::findOrFail($id);
+
+        //check if build is owned by user
+        if (request()->user()->cannot('download', $build)) {
+            abort(403);
+        }
+
+        //locate files to zip, and name for zip
+        $zip_name = 'build_ ' . $build->id . '.zip';
+
+        //make zip file
+        $zip = new ZipArchive;
+        if ($zip->open(storage_path('app/builds/user_' . auth()->id() . '/build_' . $build->id . '/' . $zip_name), ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            
+            //need app/ above but not below
+        
+            $files = Storage::files('builds/user_' . auth()->id() . '/build_' . $build->id . '/'); //get paths to all files in the designated directory
+
+            foreach ($files as $file) {
+                $file_path = Storage::path($file);
+                $relative_path = basename($file);
+                $zip->addFile($file_path, $relative_path);
+
+            }
+
+            $zip->close();
+        }
+
+        //return zip file as a download
+        return response()->download(storage_path('app/builds/user_' . auth()->id() . '/build_' . $build->id . '/' . $zip_name))->deleteFileAfterSend(true);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //get project
-        $project = Project::findOrFail($id);
+        //get buid
+        $build = Build::findOrFail($id);
 
-        //check if project is owned by user
-        if (request()->user()->cannot('destroy', $project)) {
+        //check if build is owned by user
+        if (request()->user()->cannot('destroy', $build)) {
             abort(403);
         }
 

@@ -25,12 +25,9 @@
                     </form>
                 </td>
                 <td>
-                    <form action="#">
-                        @csrf
-                        <button type="submit">
-                            <i class="fa-solid fa-download"></i>
-                        </button>
-                    </form>
+                    <a href="{{ route('builds.download', ['build'=>$build]) }}">
+                        <i class="fa-solid fa-download"></i>
+                    </a>
                 </td>
             </tr>
             @endforeach

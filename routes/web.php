@@ -60,6 +60,7 @@ Route::get('/_projects/{project}/builds', [ProjectController::class, 'builds'])-
 Route::resource('builds', BuildController::class)->only([
     'store', 'destroy'
 ])->middleware([Authenticate::class]);
+Route::get('/_builds/{build}/download', [BuildController::class, 'download'])->middleware([Authenticate::class])->name('builds.download');
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
