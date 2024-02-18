@@ -49,5 +49,9 @@
 </div>
 
 <div class="flex justify-center w-full mt-2">
-    <a href="{{route('projects.build', ['project'=>$project])}}" class="primary_btn p-2">Build Project</a>
+    <form action="{{ route('builds.store') }}" method="POST" class="primary_btn p-2">
+        @csrf
+        <input type="hidden" name="project_id" value={{ $project->id }}>
+        <button type="submit">Build Project</button>
+    </form>
 </div>

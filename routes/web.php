@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BuildController;
 
 use App\Http\Middleware\Authenticate;
 
@@ -54,6 +55,11 @@ Route::get('/_projects/{project}/edit/editor', [ProjectController::class, 'edito
 Route::get('/_projects/{project}/edit/settings', [ProjectController::class, 'settings'])->middleware([Authenticate::class])->name('projects.settings');
 Route::get('/_projects/{project}/build', [ProjectController::class, 'build'])->middleware([Authenticate::class])->name('projects.build');
 //must use _ above to avoid route conflicts
+
+//routes for managing builds
+Route::resource('builds', BuildController::class)->only([
+    'store', 'destroy'
+])->middleware([Authenticate::class]);
 
 //auth routes
 Route::post('/login', [UserController::class, 'authenticate'])->name('login');
