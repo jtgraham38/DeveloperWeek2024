@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('builds', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->softDeletes();
             $table->unsignedBigInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
         });

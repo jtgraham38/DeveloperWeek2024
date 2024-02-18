@@ -11,7 +11,6 @@ use App\Models\Project;
 class Build extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
         'project_id'

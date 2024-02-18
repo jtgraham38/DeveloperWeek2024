@@ -37,8 +37,8 @@ api_endpoint = "/api"
 @foreach($project->entities as $entity)
 
 #create route
-@app.post(api_endpoint + "/{{ $entity->table_name }}")
-def {{ $entity->singular_name }}_create():
+@app.post(api_endpoint + "/{{ $entity->multiple_name }}")
+def {{ $entity->multiple_name }}_create():
     #get schema
     schema = {{ $entity->singular_name }}Schema()
 
@@ -62,8 +62,8 @@ def {{ $entity->singular_name }}_create():
     return jsonify(response)
 
 #get listing route
-@app.get(api_endpoint + "/{{ $entity->table_name }}")
-def {{ $entity->singular_name }}_index():
+@app.get(api_endpoint + "/{{ $entity->multiple_name }}")
+def {{ $entity->multiple_name }}_index():
     #get record ids
     index = {{ $entity->singular_name }}.query.all()
     ids = [ model.id for model in index]
@@ -81,8 +81,8 @@ def {{ $entity->singular_name }}_index():
 
 
 #get specific route
-@app.get(api_endpoint + "/{{ $entity->table_name }}/<id>")
-def {{ $entity->singular_name }}_get(id):
+@app.get(api_endpoint + "/{{ $entity->multiple_name }}/<id>")
+def {{ $entity->multiple_name }}_get(id):
 #get record and schema
     model = {{ $entity->singular_name }}.query.get(id)
     schema = {{ $entity->singular_name }}Schema()
@@ -104,8 +104,8 @@ def {{ $entity->singular_name }}_get(id):
     return jsonify(response)
 
 #update route
-@app.route(api_endpoint + "/{{ $entity->table_name }}/<id>", methods=["PUT", "PATCH"])
-def {{ $entity->singular_name }}_update(id):
+@app.route(api_endpoint + "/{{ $entity->multiple_name }}/<id>", methods=["PUT", "PATCH"])
+def {{ $entity->multiple_name }}_update(id):
     #get record and schema
     model = {{ $entity->singular_name }}.query.get(id)
     schema = {{ $entity->singular_name }}Schema()
@@ -143,8 +143,8 @@ def {{ $entity->singular_name }}_update(id):
     return jsonify(response)
 
     #delete route
-@app.route(api_endpoint + "/{{ $entity->table_name }}/<id>", methods=["DELETE"])
-def {{ $entity->singular_name }}_delete(id):
+@app.route(api_endpoint + "/{{ $entity->multiple_name }}/<id>", methods=["DELETE"])
+def {{ $entity->multiple_name }}_delete(id):
     #get record and schema
     model = {{ $entity->singular_name }}.query.get(id)
     schema = {{ $entity->singular_name }}Schema()
