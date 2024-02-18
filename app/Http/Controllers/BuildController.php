@@ -56,8 +56,8 @@ class BuildController extends Controller
         Storage::disk('local')->put($save_path . 'requirements.txt', $rendered_requirements);
 
         //return view
-        dd($rendered_requirements);
-        return $rendered_app;
+        session()->flash('message', 'Build complete!');
+        return redirect()->route('projects.edit', ['project' => $project]);
     }
 
     //download a build

@@ -111,6 +111,7 @@ class ProjectController extends Controller
         $project->update($validated_data);
 
         //return view
+        session()->flash('message', 'Project updated!');
         return redirect()->route('projects.edit', ['project' => $project]);
     }
 
@@ -128,6 +129,7 @@ class ProjectController extends Controller
         }
 
         //return view
+        session()->flash('message', 'Project deleted!');
         //TODO
     }
 
