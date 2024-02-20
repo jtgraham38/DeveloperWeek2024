@@ -7,7 +7,7 @@
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
                 <p class="text-sm text-gray-400">The human-readable name for this table, e.g. 'My table'</p>
-                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->name}}">
+                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->display_name}}">
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
@@ -25,10 +25,10 @@
                         <label>Column data type</label>
                         <label>Column name</label>
                         <label>Column is key?</label>
-                        <label>Key is foreign?</label>
+                        <label>References column</label>
                         <label>Delete column</label>
                     </div>
-                        
+
                     <div class="grid grid-cols-5 gap-1 gap-x-2">
                         @foreach ($entity_attributes as $i=>$attribute)
                             <input type="text" name="{{ 'column-id-'.$i }}" value="{{ $attribute->id }}" hidden>
@@ -39,7 +39,14 @@
                             </select>
                             <input type="text" name="{{ 'column-name-'.$i }}" class="mb-0" value="{{ $attribute->name }}" required>
                             <input type="checkbox" name="{{ 'column-is-key-'.$i }}" class="h-min" checked="{{ $attribute->is_key }}">
-                            <input type="checkbox" name="{{ 'column-is-foreign-key-'.$i }}" class="h-min" checked="{{ $attribute->is_foreign }}">
+                            <select :name="'column-is-foreign-key-'+i">
+                                <option value="none">None</option>
+                                @foreach ($other_attributes as $attr)
+                                    @if ($attr->entity_id != $entity->id)
+                                        <option value="{{$attr->id}}">{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
+                                    @endif
+                                @endforeach
+                            </select>
                             <input type="checkbox" name="{{ 'delete-column-'.$i }}">
                         @endforeach
                     </div>
@@ -65,7 +72,7 @@
                         <input type="checkbox" :name="'new-column-is-foreign-key-'+i" class="h-min">
                     </div>
                 </template>
-                
+
                 <input type="number" name="row-count" x-model="rows" hidden>
                 <div class="items-start">
                     <button type="button" @click="rows++" class="secondary_btn">Add column</button>
@@ -75,11 +82,24 @@
                     <input type="checkbox" class="mb-0" name="is-private" id="is-private">
                     <label for="is-private">Private?</label>
                 </div>
-                <button type="submit" class="primary_btn">Submit</button>
+                <div class="flex justify-between">
+                    <button type="submit" class="primary_btn">Submit</button>
+                    <button type="button" onclick="delete_confirmation.showModal();" class="secondary_btn"><i class="fa fa-trash"></i> Delete</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+<x-modal id="delete_confirmation">
+<div class="flex flex-col m-2 gap-2">
+    <h4>Confirm deletion of {{ $entity->display_name }}:</h4>
+    <div class="flex flex-row justify-between">
+        <a href="{{ route("entity.delete", [ $entity->id ]) }}" class="secondary_btn"><i class="fa fa-trash"></i> Yes, delete</a>
+        <button onclick="delete_confirmation.close()" class="primary_btn"><i class="fa-solid fa-xmark"></i> Cancel</a>
+    </div>
+</div>
+</x-modal>
 
 <script>
 function update_table_name(){

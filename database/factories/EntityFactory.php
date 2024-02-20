@@ -17,7 +17,9 @@ class EntityFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(2),
+            'display_name' => fake()->sentence(2),
+            'singular_name' => fake()->sentence(2),
+            'multiple_name' => fake()->sentence(2),
             'description' => "",
             'table_name' => fake()->sentence(3),
             'is_private' => false,

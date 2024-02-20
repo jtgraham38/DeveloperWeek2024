@@ -21,7 +21,7 @@
                 {{-- Table name --}}
                 <label for="table-name">Singular name</label>
                 <p class="text-sm text-zinc-400">Singular name for an entry in this table, used in instances like cacti/cactus, etc.</p>
-                <input type="text" name="singular-name" id="singular-name" x-text="singular_name">
+                <input type="text" name="singular-name" id="singular-name">
 
                 {{-- Table columns --}}
                 <p>Table columns</p>
@@ -29,7 +29,7 @@
                     <label for="column-datatype">Column data type</label>
                     <label for="column-name">Column name</label>
                     <label for="column-is-key">Column is key?</label>
-                    <label for="column-is-foreign-key">Key is foreign?</label>
+                    <label for="column-is-foreign-key">References column</label>
                 </div>
                 {{-- Alpine-powered row duplication --}}
                 <template x-for="i in rows">
@@ -41,7 +41,12 @@
                             </select>
                             <input type="text" :name="'column-name-'+i" class="mb-0" required>
                             <input type="checkbox" :name="'column-is-key-'+i" class="h-min">
-                            <input type="checkbox" :name="'column-is-foreign-key-'+i" class="h-min">
+                            <select :name="'column-is-foreign-key-'+i">
+                                <option value="none">None</option>
+                                @foreach ($entity_attributes as $attr)
+                                    <option value="{{$attr->id}}">{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
+                                @endforeach
+                            </select>
                     </div>
                 </template>
                 <input type="number" name="row-count" x-model="rows" hidden>

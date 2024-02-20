@@ -36,8 +36,9 @@ Route::get('/login', function() {
 
 Route::post('/projects/{project_id}/create-entity', [ EntityController::class, 'store' ])->name('dashboard.store-entity');
 Route::get('/projects/{project_id}/entity/{entity}', [ EntityController::class, 'show' ])->name('dashboard.show-entity');
-Route::get('/edit-entity/{entity}', [EntityController::class, 'edit'])->name('entity.edit');
+Route::get('/projects/{project}/edit-entity/{entity}', [EntityController::class, 'edit'])->name('entity.edit');
 Route::post('/edit-entity/{entity}', [EntityController::class, 'update'])->name('entity.update');
+Route::get('/delete-entity/{entity}', [EntityController::class, 'destroy'])->name('entity.delete');
 
 //register and update account details routes
 Route::resource('users', UserController::class)->only([

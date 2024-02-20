@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        if (count(DB::table('entities')->where('name', '=', 'Test entity')->where('project_id', '=', 1)->get()) != 0) {
+        if (count(DB::table('entities')->where('display_name', '=', 'Test entity')->where('project_id', '=', 1)->get()) != 0) {
             $this->command->info("Test entity already exists, skipping.");
         } else {
             Entity::factory()->create([
