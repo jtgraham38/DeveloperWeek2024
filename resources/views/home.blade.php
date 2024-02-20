@@ -14,7 +14,7 @@
             </div> --}}
             </div>
             <div class="text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-zinc-200 sm:text-6xl">APIs... Made Easy</h1>
+            <h1 class="text-4xl font-bold tracking-tight text-zinc-200 sm:text-6xl">APIs Made Easy</h1>
             <p class="mt-6 text-lg leading-8 text-zinc-200">Our suite of tools makes it easy for you to generate an API allowing apps to interact with your database.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
                 @guest
