@@ -10,6 +10,7 @@ MarkupSafe==2.1.5
 marshmallow==3.20.2
 marshmallow-sqlalchemy==1.0.0
 packaging==23.2
+python-dotenv==1.0.1
 SQLAlchemy==2.0.27
 typing_extensions==4.9.0
 Werkzeug==3.0.1

@@ -1,32 +1,56 @@
+#make imports
 import json
 from flask import Flask, jsonify, abort, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 from marshmallow.exceptions import ValidationError
 from marshmallow_sqlalchemy import fields
+import os, sys
 
+#import models and schema
 from database import db, {{ ($project->entities->isEmpty() ? '' : $s) . $project->entities->pluck('singular_name')->implode(', ' . $s) }}
 from schema import {{ ($project->entities->isEmpty() ? '' : $s) . $project->entities->pluck('singular_name')->implode('Schema, ' . $s) . "Schema" }}
 
 
-# identify the script directory to locate the database and helper files
-import os, sys
-scriptdir = os.path.dirname(os.path.abspath(__file__))
-# add the directory with this script to the Python path
-sys.path.append(scriptdir)
-# identify the full path to the database file
-dbfile = os.path.join(scriptdir, "db.sqlite3")
+#identify the script directory to locate the database and helper files
+scriptdir = os.path.dirname(os.path.abspath(__file__))  # add the directory with this script to the Python path
+sys.path.append(scriptdir)  # identify the full path to the database file
+db_file = os.path.join(scriptdir, "db.sqlite3")
 
-# configure this web application, and intialize it
+#load environment variables
+db_user = os.getenv('db_user')
+db_password = os.getenv('db_password')
+db_host = os.getenv('db_host')
+db_name = os.getenv('db_name')
+db_filename = os.getenv('db_filename')
+
+# configure this web application
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['SECRET_KEY'] = "{{ Illuminate\Support\Str::random(40) }}"
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{dbfile}"
+app.config['ENV'] = 'production'
+app.config['CSRF_ENABLED'] = True
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+
+
+#configure the app database
+@if($project->db_type == "sqlite")
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_file}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+@else
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{{ $project->db_type }}://{ db_user }:{ db_password }@{ db_host }/{ db_name }'
+@endif
+
+
+#initialize database
 db.init_app(app)
 
 #documentation route
 @app.get("/")
+def redirect_docs():
+    return redirect(url_for('documentation'))
+@app.get("/docs")
 def documentation():
     return "Put documentation generator here."
 
