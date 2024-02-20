@@ -33,17 +33,20 @@ class BuildController extends Controller
             abort(403);
         }
 
+        //generate string to ensure unique classnames
+        $unique_string = "_" . Str::random(20) . "_";
+
         //render app.py
-        $rendered_app = view('_api_builds.flask.app', ['project' => $project])->render();
+        $rendered_app = view('_api_builds.flask.app', ['project' => $project, 's'=>$unique_string])->render();
 
         //render database.py
-        $rendered_database = view('_api_builds.flask.database', ['project' => $project])->render();
+        $rendered_database = view('_api_builds.flask.database', ['project' => $project, 's'=>$unique_string])->render();
 
         //render schema.py
-        $rendered_schema = view('_api_builds.flask.schema', ['project' => $project])->render();
+        $rendered_schema = view('_api_builds.flask.schema', ['project' => $project, 's'=>$unique_string])->render();
 
         //render requirements.txt
-        $rendered_requirements = view('_api_builds.flask.requirements', ['project' => $project])->render();
+        $rendered_requirements = view('_api_builds.flask.requirements', ['project' => $project, 's'=>$unique_string])->render();
 
         //make the build record
         $build = Build::create($validated_data);
