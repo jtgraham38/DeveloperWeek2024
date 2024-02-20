@@ -23,8 +23,8 @@ use App\Models\Project;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('home');
+})->name('home');
 
 Route::get('/create', function() {
     return view('build-table');
