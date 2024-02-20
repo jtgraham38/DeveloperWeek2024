@@ -1,11 +1,11 @@
 <div class="flex flex-col gap-4">
     <h3>{{ $project->name }} entities</h3>
     <div class="flex flex-row columns-6 gap-4">
-        @foreach ($data as $item)
+        @foreach ($entities as $entity)
         <div class="flex flex-col">
-            <p><b>{{ $item->display_name }}</b></p>
-            <p>{{ $item->description }}</p>
-            <p>{{ $item->table_name }}</p>
+            <p><b>{{ $entity->display_name }}</b></p>
+            <p>{{ $entity->description }}</p>
+            <p>{{ $entity->table_name }}</p>
         </div>
         @endforeach
     </div>

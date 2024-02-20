@@ -64,10 +64,11 @@ class ProjectController extends Controller
             abort(403);
         }
 
-        $data = app("App\Http\Controllers\EntityController")->index($id);
+        // Get all entities associated with this project
+        $entities = app("App\Http\Controllers\EntityController")->index($id);
 
         //return view
-        return view('projects.show', ['project' => $project, 'data' => $data]);
+        return view('projects.show', ['project' => $project, 'entities' => $entities]);
     }
 
     /**
@@ -143,8 +144,11 @@ class ProjectController extends Controller
             abort(403);
         }
 
+        // Get all entities associated with this project
+        $entities = app("App\Http\Controllers\EntityController")->index($id);
+
         //return view
-        return view('projects.editor', ['project' => $project]);
+        return view('projects.editor', ['project' => $project, 'entities' => $entities]);
     }
 
     public function settings(string $id){

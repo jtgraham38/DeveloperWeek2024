@@ -72,9 +72,11 @@ class DatabaseSeeder extends Seeder
             $this->command->info("Test entity already exists, skipping.");
         } else {
             Entity::factory()->create([
-                'name' => 'Test entity',
+                'display_name' => 'Test entity',
                 'description' => 'Default description',
                 'table_name' => 'test_entity',
+                'singular_name' => 'test_entity',
+                'multiple_name' => 'test_entities',
                 'is_private' => false,
                 'project_id' => 1
             ]);
