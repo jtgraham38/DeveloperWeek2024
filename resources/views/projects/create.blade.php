@@ -18,7 +18,6 @@
             <option class="text-zinc-200" value="0" disabled selected>Choose a database integration...</option>
             <option value="mysql">MySQL</option>
             <option value="sqlite">SQLite</option>
-            <option value="sql_server">SQL Server</option>
             <option value="postgresql">PostgreSQL</option> 
         </select>
     </div>

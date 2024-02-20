@@ -1,21 +1,19 @@
 #make imports
 import json
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 from marshmallow.exceptions import ValidationError
 from marshmallow_sqlalchemy import fields
+from dotenv import load_dotenv
 import os, sys
 
 #import models and schema
 from database import db, {{ ($project->entities->isEmpty() ? '' : $s) . $project->entities->pluck('singular_name')->implode(', ' . $s) }}
 from schema import {{ ($project->entities->isEmpty() ? '' : $s) . $project->entities->pluck('singular_name')->implode('Schema, ' . $s) . "Schema" }}
 
-
-#identify the script directory to locate the database and helper files
-scriptdir = os.path.dirname(os.path.abspath(__file__))  # add the directory with this script to the Python path
-sys.path.append(scriptdir)  # identify the full path to the database file
-db_file = os.path.join(scriptdir, "db.sqlite3")
+#load environment
+load_dotenv()
 
 #load environment variables
 db_user = os.getenv('db_user')
@@ -36,6 +34,10 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 #configure the app database
 @if($project->db_type == "sqlite")
+scriptdir = os.path.dirname(os.path.abspath(__file__))  #add the directory with this script to the Python path
+sys.path.append(scriptdir)  #identify the full path to the database file
+db_file = os.path.join(scriptdir, db_filename)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_file}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 @else
