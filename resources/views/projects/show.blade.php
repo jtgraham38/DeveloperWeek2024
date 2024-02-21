@@ -26,9 +26,16 @@
             </div>
         </div>
 
+        <div class="flex justify-center">
+            <a href="{{ route('projects.edit', ['project'=>$project]) }}" class="secondary_btn">Project Details</a>
+        </div>
+
         <h5>Entities</h5>
         <div class="px-2">
             @include("entity.list-entities")
+        </div>
+        <div class="flex justify-center">
+            <a href="{{ route('projects.edit', ['project'=>$project]) }}" class="secondary_btn">Edit Project</a>
         </div>
     </div>
 
