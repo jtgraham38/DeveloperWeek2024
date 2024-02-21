@@ -17,12 +17,17 @@ class EntityAttribute extends Model
         'name',
         'type',
         'is_key',
-        'is_foreign',
+        'foreign_id',
         'entity_id',
     ];
 
     public function entity()
     {
         return $this->belongsTo(Entity::class);
+    }
+
+    public function foreign_attribute()
+    {
+        return $this->hasOne(EntityAttribute::class, 'foreign_id');
     }
 }
