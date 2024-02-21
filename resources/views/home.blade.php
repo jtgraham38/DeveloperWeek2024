@@ -75,7 +75,7 @@
         <div>
             Sunrise API Builder
         </div>
-        <div>A project by <a class="text-amber-600 hover:text-amber-700" href="https://jacob-t-graham.com">Jacob Graham</a> and Daniel Ellingson.</div>
+        <div>A project by <a class="text-amber-600 hover:text-amber-700" href="https://jacob-t-graham.com">Jacob Graham</a> and <a class="text-amber-600 hover:text-amber-700" href="https://danielellingson.eiseldel.net/">Daniel Ellingson.</a></div>
     </div>
 </footer>
   
