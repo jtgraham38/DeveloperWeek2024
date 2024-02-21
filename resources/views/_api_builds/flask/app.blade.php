@@ -1,6 +1,6 @@
 #make imports
 import json
-from flask import Flask, jsonify, abort, request, redirect, url_for
+from flask import Flask, jsonify, abort, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 from marshmallow.exceptions import ValidationError
@@ -41,7 +41,7 @@ db_file = os.path.join(scriptdir, db_filename)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_file}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 @else
-app.config['SQLALCHEMY_DATABASE_URI'] = f'{{ $project->db_type }}://{ db_user }:{ db_password }@{ db_host }/{ db_name }'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{{ $project->db_type }}{{ $project->db_type == "mysql" ? "+mysqlconnector" : "" }}://{ db_user }:{ db_password }@{ db_host }/{ db_name }'
 @endif
 
 
@@ -54,7 +54,8 @@ def redirect_docs():
     return redirect(url_for('documentation'))
 @app.get("/docs")
 def documentation():
-    return "Put documentation generator here."
+    domain_name = request.host.split(':')[0]
+    return render_template('docs.html', domain_name=domain_name)
 
 
 #api endpoint definition
