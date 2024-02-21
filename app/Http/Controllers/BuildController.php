@@ -51,6 +51,9 @@ class BuildController extends Controller
         //render readme.txt
         $rendered_readme = view('_api_builds.flask.readme', ['project' => $project, 's'=>$unique_string])->render();
 
+        //render docs.html
+        $rendered_docs = view('_api_builds.flask.templates.docs', ['project' => $project, 's'=>$unique_string])->render();
+
         //make the build record
         $build = Build::create($validated_data);
 
@@ -61,6 +64,7 @@ class BuildController extends Controller
         Storage::disk('local')->put($save_path . 'schema.py', $rendered_schema);
         Storage::disk('local')->put($save_path . 'requirements.txt', $rendered_requirements);
         Storage::disk('local')->put($save_path . 'readme.txt', $rendered_readme);
+        Storage::disk('local')->put($save_path . 'templates/readme.txt', $rendered_readme);
 
         //return view
         session()->flash('message', 'Build complete!');
