@@ -64,7 +64,7 @@ class BuildController extends Controller
         Storage::disk('local')->put($save_path . 'schema.py', $rendered_schema);
         Storage::disk('local')->put($save_path . 'requirements.txt', $rendered_requirements);
         Storage::disk('local')->put($save_path . 'readme.txt', $rendered_readme);
-        Storage::disk('local')->put($save_path . 'templates/readme.txt', $rendered_readme);
+        Storage::disk('local')->put($save_path . 'templates/docs.html', $rendered_docs);
 
         //return view
         session()->flash('message', 'Build complete!');
@@ -90,17 +90,15 @@ class BuildController extends Controller
         if ($zip->open(storage_path('app/builds/user_' . auth()->id() . '/build_' . $build->id . '/' . $zip_name), ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
             
             //need app/ above but not below
-        
-            $files = Storage::files('builds/user_' . auth()->id() . '/build_' . $build->id . '/'); //get paths to all files in the designated directory
-
+            $build_folder_path = 'builds/user_' . auth()->id() . '/build_' . $build->id . '/';
+            $files = Storage::allFiles($build_folder_path); //get paths to all files in the designated directory, and all subdirectories (files gets only in this directory)
             foreach ($files as $file) {
                 $file_path = Storage::path($file);
-                $relative_path = basename($file);
+                $relative_path = str_replace($build_folder_path, '', $file);  //remove the absolute path prefix from the zip archive structure
                 $zip->addFile($file_path, $relative_path);
-
             }
-
             $zip->close();
+
         }
 
         //return zip file as a download

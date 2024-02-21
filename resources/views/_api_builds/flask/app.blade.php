@@ -41,7 +41,7 @@ db_file = os.path.join(scriptdir, db_filename)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_file}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 @else
-app.config['SQLALCHEMY_DATABASE_URI'] = f'{{ $project->db_type }}://{ db_user }:{ db_password }@{ db_host }/{ db_name }'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{{ $project->db_type }}{{ $project->db_type == "mysql" ? "+mysqlconnector" : "" }}://{ db_user }:{ db_password }@{ db_host }/{ db_name }'
 @endif
 
 
