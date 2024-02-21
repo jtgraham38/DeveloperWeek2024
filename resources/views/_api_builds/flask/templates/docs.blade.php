@@ -6,6 +6,8 @@
     <title>API Documentation</title>
 </head>
 <body style="background-color: darkslategray; color:cornsilk;">
+<h1 style="color: cornsilk;">Docs</h1>
+<hr style="border-color: cornsilk;">
 
 @foreach($project->entities as $entity)
 
