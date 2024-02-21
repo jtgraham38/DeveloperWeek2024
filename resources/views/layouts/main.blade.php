@@ -29,10 +29,10 @@
                         @include('users.create') 
                     </x-modal>
 
-                    @else
+                @else
                     <form action="{{ route('logout') }}" method="POST" class="my-0">
                         @csrf
-                        <button onclick="signup_modal.showModal();" class="hover:text-zinc-400" href="#" type="submit">Log Out <i class="fa-solid fa-right-from-bracket"></i></button>
+                        <button class="hover:text-zinc-400" type="submit">Log Out <i class="fa-solid fa-right-from-bracket"></i></button>
                     </form>
                 @endguest
             </div>

@@ -33,17 +33,26 @@ class BuildController extends Controller
             abort(403);
         }
 
+        //generate string to ensure unique classnames
+        $unique_string = "_" . Str::random(20) . "_";
+
         //render app.py
-        $rendered_app = view('_api_builds.flask.app', ['project' => $project])->render();
+        $rendered_app = view('_api_builds.flask.app', ['project' => $project, 's'=>$unique_string])->render();
 
         //render database.py
-        $rendered_database = view('_api_builds.flask.database', ['project' => $project])->render();
+        $rendered_database = view('_api_builds.flask.database', ['project' => $project, 's'=>$unique_string])->render();
 
         //render schema.py
-        $rendered_schema = view('_api_builds.flask.schema', ['project' => $project])->render();
+        $rendered_schema = view('_api_builds.flask.schema', ['project' => $project, 's'=>$unique_string])->render();
 
         //render requirements.txt
-        $rendered_requirements = view('_api_builds.flask.requirements', ['project' => $project])->render();
+        $rendered_requirements = view('_api_builds.flask.requirements', ['project' => $project, 's'=>$unique_string])->render();
+
+        //render readme.txt
+        $rendered_readme = view('_api_builds.flask.readme', ['project' => $project, 's'=>$unique_string])->render();
+
+        //render docs.html
+        $rendered_docs = view('_api_builds.flask.templates.docs', ['project' => $project, 's'=>$unique_string])->render();
 
         //make the build record
         $build = Build::create($validated_data);
@@ -54,6 +63,8 @@ class BuildController extends Controller
         Storage::disk('local')->put($save_path . 'database.py', $rendered_database);
         Storage::disk('local')->put($save_path . 'schema.py', $rendered_schema);
         Storage::disk('local')->put($save_path . 'requirements.txt', $rendered_requirements);
+        Storage::disk('local')->put($save_path . 'readme.txt', $rendered_readme);
+        Storage::disk('local')->put($save_path . 'templates/docs.html', $rendered_docs);
 
         //return view
         session()->flash('message', 'Build complete!');
@@ -79,17 +90,15 @@ class BuildController extends Controller
         if ($zip->open(storage_path('app/builds/user_' . auth()->id() . '/build_' . $build->id . '/' . $zip_name), ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
             
             //need app/ above but not below
-        
-            $files = Storage::files('builds/user_' . auth()->id() . '/build_' . $build->id . '/'); //get paths to all files in the designated directory
-
+            $build_folder_path = 'builds/user_' . auth()->id() . '/build_' . $build->id . '/';
+            $files = Storage::allFiles($build_folder_path); //get paths to all files in the designated directory, and all subdirectories (files gets only in this directory)
             foreach ($files as $file) {
                 $file_path = Storage::path($file);
-                $relative_path = basename($file);
+                $relative_path = str_replace($build_folder_path, '', $file);  //remove the absolute path prefix from the zip archive structure
                 $zip->addFile($file_path, $relative_path);
-
             }
-
             $zip->close();
+
         }
 
         //return zip file as a download

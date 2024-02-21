@@ -1,9 +1,9 @@
-from database import {{ $project->entities->pluck('singular_name')->implode(', ') }}
+from database import {{ ($project->entities->isEmpty() ? '' : $s) . $project->entities->pluck('singular_name')->implode(', ' . $s) }}
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 @foreach ($project->entities as $entity)
-class {{ $entity->singular_name }}Schema(SQLAlchemyAutoSchema):
+class {{ $s . $entity->singular_name }}Schema(SQLAlchemyAutoSchema):
     class Meta:
-        model = {{ $entity->singular_name }}
+        model = {{ $s . $entity->singular_name }}
         load_instance = True
 @endforeach

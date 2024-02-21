@@ -54,8 +54,9 @@ class UserController extends Controller
         //log the user in
         auth()->login($user);
 
-        //redirect to homepage
-        return redirect('/');
+        //redirect to dashboard
+        session()->flash('message', 'Registered successfully!');
+        return redirect()->route('projects.none_selected');
     }
 
     /**
@@ -108,6 +109,7 @@ class UserController extends Controller
         $user->update($validated_data);
 
         //redirect to homepage
+        session()->flash('message', 'Account updated!');
         return redirect()->route('projects.none_selected');
     }
 
@@ -131,6 +133,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
+            session()->flash('message', 'Logged in successfully!');
             return redirect()->route('projects.none_selected');
         }
  
@@ -150,6 +153,7 @@ class UserController extends Controller
         $request->session()->regenerateToken();
     
         //redirect
+        session()->flash('message', 'Logged out successfully!');
         return redirect('/');
     }
 }
