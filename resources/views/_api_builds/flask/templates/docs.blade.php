@@ -16,14 +16,13 @@
 <details style="padding: 1rem; border-bottom: 1px solid cornsilk;">
 <summary style="color: red;"><h2 style="display: inline;">CREATE a {{ $entity->singular_name }}.</h2></summary>
 <article>
-    <h3>POST <span style="border-bottom: 1px dashed gray;">https://@{{ "{{domain_name}}" }}/api/{{ $entity->multiple_name }}</span></h3>
+    <h3>POST <span style="border-bottom: 1px dashed gray;">@{{ domain_name }}/api/{{ $entity->multiple_name }}</span></h3>
     <p>Submit a POST request with JSON of the following format in the body to <span style="color: red;">CREATE</span> a {{ $entity->singular_name }}.</p>
     <pre style="border: 1px solid darkgray; background-color: lightgray; border-radius: 0.2rem; color: darkcyan; padding: 0.25rem;">
 {
-    "first_name": "string_value",
-    "last_name": "string_value",
-    "email": "string_value",
-    "role": "int_value"
+@foreach ($entity->attributes as $attribute)
+    "{{ $attribute->name }}": @if ($attribute->type == 'boolean')"bool_value"@elseif ($attribute->type == 'int')"int_value"@elseif (1 == 1)"string_value"@else THIS WILL NEVER BE REACHED!@endif{{!$loop->last ? "," : ""}}<br>
+@endforeach
 }</pre>
     </article>
 </details>
@@ -31,7 +30,7 @@
 <details style="padding: 1rem; border-bottom: 1px solid cornsilk;">
     <summary style="color: blue;"><h2 style="display: inline;">GET all {{ $entity->multiple_name }}.</h2></summary>
     <article>
-        <h3>GET <span style="border-bottom: 1px dashed gray;">https://@{{ "{{domain_name}}" }}/api/{{ $entity->multiple_name }}</span></h3>
+        <h3>GET <span style="border-bottom: 1px dashed gray;">@{{ domain_name }}/api/{{ $entity->multiple_name }}</span></h3>
         <p>Submit a GET request to <span style="color: blue;">GET</span> an index of {{ $entity->multiple_name }}.</p>
     </article>
 </details>
@@ -39,7 +38,7 @@
 <details style="padding: 1rem; border-bottom: 1px solid cornsilk;">
     <summary style="color: blue;"><h2 style="display: inline;">GET a {{ $entity->singular_name }}.</h2></summary>
     <article>
-        <h3>GET <span style="border-bottom: 1px dashed gray;">https://{{domain_name}}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
+        <h3>GET <span style="border-bottom: 1px dashed gray;">@{{ domain_name }}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
         <p>Submit a GET request to <span style="color: blue;">GET</span> a specific {{ $entity->singular_name }}.</p>
     </article>
 </details>
@@ -47,14 +46,13 @@
 <details style="padding: 1rem; border-bottom: 1px solid cornsilk;">
     <summary style="color: lime;"><h2 style="display: inline;">UPDATE a {{ $entity->singular_name }}.</h2></summary>
     <article>
-        <h3>PUT/PATCH <span style="border-bottom: 1px dashed gray;">https://@{{ "{{domain_name}}" }}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
+        <h3>PUT/PATCH <span style="border-bottom: 1px dashed gray;">@{{ domain_name }}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
         <p>Submit a PUT/PATCH request with JSON of the following format in the body to <span style="color: lime;">UPDATE</span> a {{ $entity->singular_name }}.  It need not contain every key listed, but it may not contain keys other than those listed.</p>
         <pre style="border: 1px solid darkgray; background-color: lightgray; border-radius: 0.2rem; color: darkcyan; padding: 0.25rem;">
 {
-    "first_name": "string_value",
-    "last_name": "string_value",
-    "email": "string_value",
-    "role": "int_value"
+@foreach ($entity->attributes as $attribute)
+    "{{ $attribute->name }}": @if ($attribute->type == 'boolean')"bool_value"@elseif ($attribute->type == 'int')"int_value"@elseif (1 == 1)"string_value"@else THIS WILL NEVER BE REACHED!@endif{{!$loop->last ? "," : ""}}<br>
+@endforeach
 }</pre>
     </article>
 </details>
@@ -62,7 +60,7 @@
 <details style="padding: 1rem; border-bottom: 1px solid cornsilk;">
     <summary style="color: orange;"><h2 style="display: inline;">DELETE a {{ $entity->singular_name }}.</h2></summary>
     <article>
-        <h3>DELETE <span style="border-bottom: 1px dashed gray;">https://@{{ "{{domain_name}}" }}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
+        <h3>DELETE <span style="border-bottom: 1px dashed gray;">@{{ domain_name }}/api/{{ $entity->multiple_name }}/&lt;{{ $entity->singular_name }}_id&gt;</span></h3>
         <p>Submit a DELETE request to <span style="color: orange;">DELETE</span> a specific {{ $entity->singular_name }}.</p>
     </article>
 </details>

@@ -22,7 +22,7 @@ December of 2023 with a B.S. in Computer Science and a minor in Cybersecurity.  
 
 ## About Daniel Ellingson
 
-TODO
+[Daniel Ellingson](https://danielellingson.eiseldel.net/) is a web developer and game design enthusiast. He graduated from CSU, Chico in December 2020 with a B.S. in Computer Science. He is currently employed at University of the Pacific, where he helps maintain and develop features for the university's Drupal site.
 
 ## Thank You!
 

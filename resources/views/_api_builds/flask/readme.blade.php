@@ -24,3 +24,5 @@ db_host=localhost
 db_name=SALES
 db_filename=
 ------------------------------------------------
+
+Visit https://<your_domain_name>/docs to see generated documentation.
