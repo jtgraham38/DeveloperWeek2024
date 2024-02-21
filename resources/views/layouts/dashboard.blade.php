@@ -94,7 +94,32 @@
     <br>
     <br>
 
-    <div class="mx-auto px-4 ml-44 mr-4" hx-get="{{ isset($project) ? route('projects.show', ['project'=>$project]) : route('projects.index') }}" hx-target="#dashboard_body" hx-trigger="load">
+    @php
+        //get the tab arg
+        $tab = request()->input('p');
+
+        //get the correct route
+        $route = route('projects.index');
+        if (isset($project)){
+            switch ($tab) {
+                case "editor":
+                    $route = route('projects.editor', ['project'=>$project]);
+                    break;
+                case "settings":
+                    $route = route('projects.settings', ['project'=>$project]);
+                    break;
+                case "builds":
+                    $route = route('projects.builds', ['project'=>$project]);
+                    break;
+                // Additional cases as needed
+                default:
+                    $route = route('projects.show', ['project'=>$project]);
+            }
+        }
+
+    @endphp
+
+    <div class="mx-auto px-4 ml-44 mr-4" hx-get="{{ $route }}" hx-target="#dashboard_body" hx-trigger="load">
         <i id="dashboard_loader" class="fa-spin htmx-indicator fa-solid fa-spinner fa-2xl text-zinc-200"></i>
 
         <div id="dashboard_body" class="p-3 text-zinc-200">
