@@ -111,7 +111,6 @@
                 case "builds":
                     $route = route('projects.builds', ['project'=>$project]);
                     break;
-                // Additional cases as needed
                 default:
                     $route = route('projects.show', ['project'=>$project]);
             }

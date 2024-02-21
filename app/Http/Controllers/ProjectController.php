@@ -113,7 +113,7 @@ class ProjectController extends Controller
 
         //return view
         session()->flash('message', 'Project updated!');
-        return redirect()->route('projects.edit', ['project' => $project]);
+        return redirect()->route('projects.edit', ['project' => $project, 'p'=>"settings"]);
     }
 
     /**
