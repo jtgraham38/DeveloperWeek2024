@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->boolean('is_key')->default(false);
-            $table->boolean('foreign_id')->default(false);
+            $table->unsignedBigInteger('foreign_id')->nullabl();
+            $table->foreign('foreign_id')->references('id')->on('entity_attributes')->onDelete('cascade');
             $table->unsignedBigInteger('entity_id');
             $table->foreign('entity_id')->references('id')->on('entities')->onDelete('cascade');
         });
