@@ -1,6 +1,6 @@
 #make imports
 import json
-from flask import Flask, jsonify, abort, request, redirect, url_for
+from flask import Flask, jsonify, abort, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 from marshmallow.exceptions import ValidationError
@@ -54,7 +54,8 @@ def redirect_docs():
     return redirect(url_for('documentation'))
 @app.get("/docs")
 def documentation():
-    return "Put documentation generator here."
+    domain_name = request.host.split(':')[0]
+    return render_template('docs.html', domain_name=domain_name)
 
 
 #api endpoint definition
