@@ -2,12 +2,12 @@
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
             <h4>Edit entity</h4>
-            <form class="flex flex-col gap-1" x-data="{ rows: 0, table_name: '' }" action="{{ route("entity.update", [ $entity->id ]) }}" method="post">
+            <form class="flex flex-col gap-1" x-data="{ rows: 0, table_name: '', singular_name: ''}" action="{{ route("entity.update", [ $entity->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
                 <p class="text-sm text-gray-400">The human-readable name for this table, e.g. 'My table'</p>
-                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->name}}">
+                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->display_name}}">
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="flex space-x-2">
                     <button type="submit" class="primary_btn">Submit</button>
-                    <button type="button" class="secondary_btn" hx-get="{{ route('projects.editor', ['project'=>$entity->project]) }}" hx-target="#dashboard_body" hx-trigger="load">Cancel</button>
+                    <button type="button" class="secondary_btn" hx-get="{{ route('projects.editor', ['project'=>$entity->project]) }}" hx-target="#dashboard_body" hx-indicator="#dashboard_loader">Cancel</button>
                     {{-- NOTE: the above line contains an extra db call, fix later --}}
                 </div>
             </form>
