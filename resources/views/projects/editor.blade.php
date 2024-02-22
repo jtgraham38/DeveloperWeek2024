@@ -1,7 +1,7 @@
 Editor for project:
 {{ $project->id }}
 
-<div class="flex flex-row">
+<div class="flex flex-row gap-2">
     @foreach ($entities as $entity)
     <a hx-get="{{ route('entity.edit', [ $project, $entity ]) }}" hx-target="#dashboard_body" hx-indicator="#dashboard_loader">
         <div class="border-2 border-gray-600 hover:border-primary-red rounded-md">
@@ -14,5 +14,5 @@ Editor for project:
     </a>
     @endforeach
 </div>
-
+<h4>Create entity</h4>
 @include("entity.create-entity")

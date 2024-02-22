@@ -72,7 +72,7 @@ class EntityController extends Controller
             $attribute->type = $input[$datatype_key.$i];
             $attribute->name = $input[$name_key.$i];
             $attribute->is_key = $request->has($column_is_key_key.$i) ? true : false;
-            $attribute->references = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : -1;
+            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
             $attribute->entity_id = $entity->getKey();
             $attribute->save();
         }
@@ -139,7 +139,7 @@ class EntityController extends Controller
             $attribute->name = $input[$name_key.$i];
             $attribute->type = $input[$datatype_key.$i];
             $attribute->is_key = $request->has($column_is_key_key.$i) ? true : false;
-            $attribute->references = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : -1;
+            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
             $attribute->save();
         }
         // Create new entities
@@ -149,7 +149,7 @@ class EntityController extends Controller
             $attribute->name = $input[$new_key.$name_key.$i];
             $attribute->type = $input[$new_key.$datatype_key.$i];
             $attribute->is_key = $request->has($new_key.$column_is_key_key.$i) ? true : false;
-            $attribute->references = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : -1;
+            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
             $attribute->entity_id = $entity->id;
             $attribute->save();
         }
@@ -162,6 +162,8 @@ class EntityController extends Controller
      */
     public function destroy(Entity $entity)
     {
+        $project_id = $entity->project_id;
         $entity->delete();
+        return redirect()->route('projects.edit', [ $project_id ]);
     }
 }

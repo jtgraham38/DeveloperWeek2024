@@ -68,7 +68,7 @@ class ProjectController extends Controller
         }
 
         // Get all entities associated with this project
-        $entities = app("App\Http\Controllers\EntityController")->index($id);
+        $entities = Entity::where('project_id', $id)->get();
 
         //return view
         return view('projects.show', ['project' => $project, 'entities' => $entities]);

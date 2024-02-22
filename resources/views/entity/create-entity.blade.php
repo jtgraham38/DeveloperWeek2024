@@ -1,13 +1,12 @@
 <div class="relative flex card p-2">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
-            <h4>Create entity</h4>
             <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="{{ route("dashboard.store-entity", [ $project->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
                 <p class="text-sm text-zinc-400">The human-readable name for this table, e.g. 'My table'</p>
-                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()">
+                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" required>
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
@@ -16,12 +15,12 @@
                 {{-- Table name --}}
                 <label for="table-name">Table name</label>
                 <p class="text-sm text-zinc-400">The machine name for this table, e.g. 'my_table'</p>
-                <input type="text" name="table-name" id="table-name" x-text="table_name">
+                <input type="text" name="table-name" id="table-name" x-text="table_name" required>
 
-                {{-- Table name --}}
+                {{-- Singular name --}}
                 <label for="table-name">Singular name</label>
                 <p class="text-sm text-zinc-400">Singular name for an entry in this table, used in instances like cacti/cactus, etc.</p>
-                <input type="text" name="singular-name" id="singular-name">
+                <input type="text" name="singular-name" id="singular-name" required>
 
                 {{-- Table columns --}}
                 <p>Table columns</p>

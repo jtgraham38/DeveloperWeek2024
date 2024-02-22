@@ -7,7 +7,7 @@
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
                 <p class="text-sm text-gray-400">The human-readable name for this table, e.g. 'My table'</p>
-                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->display_name}}">
+                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" value="{{$entity->display_name}}" required>
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
@@ -16,7 +16,12 @@
                 {{-- Table name --}}
                 <label for="table-name">Table name</label>
                 <p class="text-sm text-gray-400">The machine name for this table, e.g. 'my_table'</p>
-                <input type="text" name="table-name" id="table-name" x-text="table_name" value="{{$entity->table_name}}">
+                <input type="text" name="table-name" id="table-name" x-text="table_name" value="{{$entity->table_name}}" required>
+
+                {{-- Singular name --}}
+                <label for="table-name">Singular name</label>
+                <p class="text-sm text-zinc-400">Singular name for an entry in this table, used in instances like cacti/cactus, etc.</p>
+                <input type="text" name="singular-name" id="singular-name" value="{{$entity->singular_name}}" required>
 
                 @if (count($entity_attributes))
                     {{-- Table columns --}}
@@ -38,12 +43,12 @@
                                 <option value="bool" @if ($attribute->type == "bool") selected @endif>bool</option>
                             </select>
                             <input type="text" name="{{ 'column-name-'.$i }}" class="mb-0" value="{{ $attribute->name }}" required>
-                            <input type="checkbox" name="{{ 'column-is-key-'.$i }}" class="h-min" checked="{{ $attribute->is_key }}">
-                            <select :name="'column-is-foreign-key-'+i">
+                            <input type="checkbox" name="{{ 'column-is-key-'.$i }}" class="h-min" @if ($attribute->is_key == true) checked @endif>
+                            <select name="{{ 'column-is-foreign-key-'.$i }}">
                                 <option value="none">None</option>
                                 @foreach ($other_attributes as $attr)
                                     @if ($attr->entity_id != $entity->id)
-                                        <option value="{{$attr->id}}">{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
+                                        <option value="{{$attr->id}}" @if ($attribute->foreign_id == $attr->id) selected @endif>{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -57,7 +62,7 @@
                     <label>Column data type</label>
                     <label>Column name</label>
                     <label>Column is key?</label>
-                    <label>Key is foreign?</label>
+                    <label>References column</label>
                 </div>
                 {{-- Alpine-powered row duplication --}}
                 <template x-for="i in rows">
@@ -69,7 +74,14 @@
                         </select>
                         <input type="text" :name="'new-column-name-'+i" class="mb-0" required>
                         <input type="checkbox" :name="'new-column-is-key-'+i" class="h-min">
-                        <input type="checkbox" :name="'new-column-is-foreign-key-'+i" class="h-min">
+                        <select :name="'column-is-foreign-key-'+i">
+                            <option value="none">None</option>
+                            @foreach ($other_attributes as $attr)
+                                @if ($attr->entity_id != $entity->id)
+                                    <option value="{{$attr->id}}">{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                 </template>
 
