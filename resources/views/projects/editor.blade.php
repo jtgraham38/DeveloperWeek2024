@@ -1,7 +1,8 @@
 Editor for project:
 {{ $project->id }}
 
-<div class="flex flex-row gap-2">
+<h4>Edit existing entities</h4>
+<div class="flex flex-row gap-2 mb-2">
     @foreach ($entities as $entity)
     <a hx-get="{{ route('entity.edit', [ $project, $entity ]) }}" hx-target="#dashboard_body" hx-indicator="#dashboard_loader">
         <div class="border-2 border-gray-600 hover:border-primary-red rounded-md">

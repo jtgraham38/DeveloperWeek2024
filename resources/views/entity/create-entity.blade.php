@@ -57,7 +57,9 @@
                     <input type="checkbox" class="mb-0" name="is-private" id="is-private">
                     <label for="is-private">Private?</label>
                 </div>
-                <button type="submit" class="primary_btn">Submit</button>
+                <div class="flex justify-between">
+                    <button type="submit" class="primary_btn">Submit</button>
+                </div>
             </form>
         </div>
     </div>
