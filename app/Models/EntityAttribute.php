@@ -26,8 +26,13 @@ class EntityAttribute extends Model
         return $this->belongsTo(Entity::class);
     }
 
+    public function referencing_attributes()
+    {
+        return $this->hasMany(EntityAttribute::class, 'foreign_id');
+    }
+
     public function foreign_attribute()
     {
-        return $this->hasOne(EntityAttribute::class, 'foreign_id');
+        return $this->belongsTo(EntityAttribute::class, 'foreign_id');
     }
 }
