@@ -15,7 +15,7 @@
             </div>
             <div class="text-center">
             <h1 class="text-4xl font-bold tracking-tight text-zinc-200 sm:text-6xl">APIs Made Easy</h1>
-            <p class="mt-6 text-lg leading-8 text-zinc-200">Our suite of tools makes it easy for you to generate an API allowing apps to interact with your database.</p>
+            <p class="mt-6 text-lg leading-8 text-zinc-200">Our suite of tools makes it easy for you to generate a fully-functional REST API, allowing apps to interact with your organization's data.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
                 @guest
                     <button onclick="signup_modal.showModal();" class="primary_btn rounded-md px-4 py-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800">

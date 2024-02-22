@@ -35,7 +35,7 @@ class Entity extends Model
         return $this->hasMany(EntityAttribute::class);
     }
 
-    public function build()
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }

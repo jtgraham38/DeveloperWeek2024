@@ -75,7 +75,11 @@
                     <input type="checkbox" class="mb-0" name="is-private" id="is-private">
                     <label for="is-private">Private?</label>
                 </div>
-                <button type="submit" class="primary_btn">Submit</button>
+                <div class="flex space-x-2">
+                    <button type="submit" class="primary_btn">Submit</button>
+                    <button type="button" class="secondary_btn" hx-get="{{ route('projects.editor', ['project'=>$entity->project]) }}" hx-target="#dashboard_body" hx-trigger="load">Cancel</button>
+                    {{-- NOTE: the above line contains an extra db call, fix later --}}
+                </div>
             </form>
         </div>
     </div>
