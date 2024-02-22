@@ -1,3 +1,5 @@
+<h5>This page is bugged!  There is use of an alpine for and a blade for to generate input names, but they both count by ones, so we have duplicate input names on the same form.</h5>
+
 <div class="relative flex">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
@@ -86,7 +88,29 @@
                         </select>
                         <input type="text" :name="'new-column-name-'+i" class="mb-0" required>
                         <input type="checkbox" :name="'new-column-is-key-'+i" class="h-min">
-                        <input type="checkbox" :name="'new-column-is-foreign-key-'+i" class="h-min">
+
+                        <div class="flex space-x-2" x-data="{is_foreign: false, foreign_entity_id: '', foreign_attr_id: ''}">
+                            <input type="checkbox" x-model="is_foreign" x-effect="is_foreign ? '' : foreign_entity_id=''; foreign_attr_id='';" :name="'column-is-foreign-key-'+i" class="h-min">
+
+                            <select class="p-1" x-on:change="is_foreign ? foreign_entity_id = $event.target.value : foreign_entity_id =''; foreign_attr_id='null';" x-show="is_foreign">
+                                <option class="text-zinc-200" value="null" x-bind:selected="foreign_entity_id == 'null'">Choose an entity...</option>
+                                @foreach($entity->project->entities as $entity)
+                                    <option class="text-zinc-200" value="{{ $entity->id }}">{{ $entity->display_name }}</option>
+                                @endforeach
+                            </select>
+
+                            <select class="p-1" x-model="foreign_attr_id" x-show="is_foreign && foreign_entity_id != ''">
+                                <option class="text-zinc-200" value="null" x-bind:selected="foreign_attr_id == 'null'">Choose an attribute...</option>
+                                @foreach($entity->project->entities as $entity)
+                                    @foreach($entity->attributes as $attribute)
+                                        <option x-show="{{ $entity->id }} == foreign_entity_id" class="text-zinc-200" value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                    @endforeach
+                                @endforeach
+                            </select>
+
+                            <input type="hidden" x-bind:name="'foreign_attr_id_' + i" x-bind:disabled="foreign_attr_id == 'null'" x-model="foreign_attr_id">
+                        </div>
+
                     </div>
                 </template>
                 
