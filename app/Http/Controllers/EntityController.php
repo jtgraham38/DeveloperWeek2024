@@ -62,7 +62,7 @@ class EntityController extends Controller
         $datatype_key = 'column-datatype-';
         $name_key = 'column-name-';
         $column_is_key_key = 'column-is-key-';
-        $column_is_foreign_key_key = 'column-is-foreign-key-';
+        $column_is_foreign_key_key = 'foreign_attr_id_';
 
         $rows = $request->integer('row-count');
 
@@ -71,11 +71,11 @@ class EntityController extends Controller
                 'type' => $input[$datatype_key.$i],
                 'name' => $input[$name_key.$i],
                 'is_key' => $request->has($column_is_key_key.$i) ? true : false,
-                'is_foreign' => $request->has($column_is_foreign_key_key.$i) ? true : false,
+                'foreign_id' => $request->input($column_is_foreign_key_key.$i),
                 'entity_id' => $entity
             ]);
         }
-        return redirect()->route('projects.edit', [ $project_id ]);
+        return redirect()->route('projects.edit', [ 'project'=>$project_id, 'p'=>'editor' ]);
     }
 
     /**

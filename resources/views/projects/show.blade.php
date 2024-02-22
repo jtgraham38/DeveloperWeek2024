@@ -27,7 +27,7 @@
         </div>
 
         <div class="flex justify-center">
-            <a href="{{ route('projects.edit', ['project'=>$project]) }}" class="secondary_btn">Project Details</a>
+            <a href="{{ route('projects.edit', ['project'=>$project, 'p'=>'settings']) }}" class="secondary_btn">Project Details</a>
         </div>
 
         <h5>Entities</h5>
@@ -35,7 +35,7 @@
             @include("entity.list-entities")
         </div>
         <div class="flex justify-center">
-            <a href="{{ route('projects.edit', ['project'=>$project]) }}" class="secondary_btn">Edit Project</a>
+            <a href="{{ route('projects.edit', ['project'=>$project, 'p'=>'editor']) }}" class="secondary_btn">Edit Project</a>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
                 </tbody>
             </table>
             <div class="flex justify-center">
-                <a href="{{ route('projects.edit', ['project'=>$project]) }}" class="secondary_btn">See all Builds</a>
+                <a href="{{ route('projects.edit', ['project'=>$project, 'p'=>'builds']) }}" class="secondary_btn">See all Builds</a>
             </div>
         </div>
     </div>
