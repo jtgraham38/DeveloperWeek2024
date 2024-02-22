@@ -64,9 +64,6 @@
                                 </select>
 
                                 <input type="hidden" x-bind:name="'foreign_attr_id_' + i" x-bind:disabled="foreign_attr_id == 'null'" x-model="foreign_attr_id">
-
-                                <div x-text="foreign_entity_id"></div>
-                                <div x-text="foreign_attr_id"></div>
                             </div>
 
                     </div>
