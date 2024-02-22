@@ -29,8 +29,8 @@
                 <div class="grid grid-cols-4 gap-1 gap-x-2">
                     <label for="column-datatype">Column data type</label>
                     <label for="column-name">Column name</label>
-                    <label for="column-is-key">Column is key?</label>
-                    <label for="column-is-foreign-key">Key is foreign?</label>
+                    <label for="column-is-key">Column is primary key?</label>
+                    <label for="column-is-foreign-key">Is foreign key?</label>
                 </div>
                 {{-- Alpine-powered row duplication --}}
                 <template x-for="i in rows">
@@ -42,7 +42,33 @@
                             </select>
                             <input type="text" :name="'column-name-'+i" class="mb-0" required>
                             <input type="checkbox" :name="'column-is-key-'+i" class="h-min">
-                            <input type="checkbox" :name="'column-is-foreign-key-'+i" class="h-min">
+
+                            
+                            <div class="flex space-x-2" x-data="{is_foreign: false, foreign_entity_id: '', foreign_attr_id: ''}">
+                                <input type="checkbox" x-model="is_foreign" x-effect="is_foreign ? '' : foreign_entity_id=''; foreign_attr_id='';" :name="'column-is-foreign-key-'+i" class="h-min">
+
+                                <select class="p-1" x-on:change="is_foreign ? foreign_entity_id = $event.target.value : foreign_entity_id =''; foreign_attr_id='null';" x-show="is_foreign">
+                                    <option class="text-zinc-200" value="null" x-bind:selected="foreign_entity_id == 'null'">Choose an entity...</option>
+                                    @foreach($project->entities as $entity)
+                                        <option class="text-zinc-200" value="{{ $entity->id }}">{{ $entity->display_name }}</option>
+                                    @endforeach
+                                </select>
+
+                                <select class="p-1" x-model="foreign_attr_id" x-show="is_foreign && foreign_entity_id != ''">
+                                    <option class="text-zinc-200" value="null" x-bind:selected="foreign_attr_id == 'null'">Choose an attribute...</option>
+                                    @foreach($project->entities as $entity)
+                                        @foreach($entity->attributes as $attribute)
+                                            <option x-show="{{ $entity->id }} == foreign_entity_id" class="text-zinc-200" value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                        @endforeach
+                                    @endforeach
+                                </select>
+
+                                <input type="hidden" x-bind:name="'foreign_attr_id_' + i" x-bind:disabled="foreign_attr_id == 'null'" x-model="foreign_attr_id">
+
+                                <div x-text="foreign_entity_id"></div>
+                                <div x-text="foreign_attr_id"></div>
+                            </div>
+
                     </div>
                 </template>
                 <input type="number" name="row-count" x-model="rows" hidden>

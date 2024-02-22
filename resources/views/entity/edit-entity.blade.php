@@ -1,7 +1,8 @@
 <div class="relative flex">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
-            <h4>Edit entity</h4>
+        <div class="card p-2">
+            <h4>Edit Entity</h4>
             <form class="flex flex-col gap-1" x-data="{ rows: 0, table_name: '', singular_name: ''}" action="{{ route("entity.update", [ $entity->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
@@ -81,6 +82,7 @@
                     {{-- NOTE: the above line contains an extra db call, fix later --}}
                 </div>
             </form>
+        </div>
         </div>
     </div>
 </div>
