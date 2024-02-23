@@ -1,7 +1,9 @@
 <div class="relative flex card p-2">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
-            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '' }" action="{{ route("dashboard.store-entity", [ $project->id ]) }}" method="post">
+            <h4>Create Entity</h4>
+            <small>An entity represents a table in your database.</small>
+            <form class="flex flex-col gap-1" x-data="{ rows: 1, table_name: '', singular_name: ''}" action="{{ route("dashboard.store-entity", [ $project->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
@@ -27,8 +29,8 @@
                 <div class="grid grid-cols-4 gap-1 gap-x-2">
                     <label for="column-datatype">Column data type</label>
                     <label for="column-name">Column name</label>
-                    <label for="column-is-key">Column is key?</label>
-                    <label for="column-is-foreign-key">References column</label>
+                    <label for="column-is-key">Column is primary key?</label>
+                    <label for="column-is-foreign-key">Is foreign key?</label>
                 </div>
                 {{-- Alpine-powered row duplication --}}
                 <template x-for="i in rows">

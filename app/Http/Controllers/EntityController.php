@@ -76,7 +76,7 @@ class EntityController extends Controller
             $attribute->entity_id = $entity->getKey();
             $attribute->save();
         }
-        return redirect()->route('projects.edit', [ $project_id ]);
+        return redirect()->route('projects.edit', [ 'project'=>$project_id, 'p'=>'editor' ]);
     }
 
     /**
@@ -149,7 +149,7 @@ class EntityController extends Controller
             $attribute->name = $input[$new_key.$name_key.$i];
             $attribute->type = $input[$new_key.$datatype_key.$i];
             $attribute->is_key = $request->has($new_key.$column_is_key_key.$i) ? true : false;
-            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
+            $attribute->foreign_id = $input[$new_key.$column_is_foreign_key_key.$i] != "none" ? $request->integer($new_key.$column_is_foreign_key_key.$i) : null;
             $attribute->entity_id = $entity->id;
             $attribute->save();
         }

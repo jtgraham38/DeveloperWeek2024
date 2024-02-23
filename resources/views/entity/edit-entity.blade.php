@@ -1,8 +1,9 @@
 <div class="relative flex">
     <div class="lg:max-w-7xl">
         <div class="sm:columns-1 gap-6 lg:gap-8 text-white">
-            <h4>Edit entity</h4>
-            <form class="flex flex-col gap-1" x-data="{ rows: 0, table_name: '' }" action="{{ route("entity.update", [ $entity->id ]) }}" method="post">
+        <div class="card p-2">
+            <h4>Edit Entity</h4>
+            <form class="flex flex-col gap-1" x-data="{ rows: 0, table_name: '', singular_name: ''}" action="{{ route("entity.update", [ $entity->id ]) }}" method="post">
                 @csrf
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
@@ -74,7 +75,7 @@
                         </select>
                         <input type="text" :name="'new-column-name-'+i" class="mb-0" required>
                         <input type="checkbox" :name="'new-column-is-key-'+i" class="h-min">
-                        <select :name="'column-is-foreign-key-'+i">
+                        <select :name="'new-column-is-foreign-key-'+i">
                             <option value="none">None</option>
                             @foreach ($other_attributes as $attr)
                                 @if ($attr->entity_id != $entity->id)
@@ -94,11 +95,13 @@
                     <input type="checkbox" class="mb-0" name="is-private" id="is-private">
                     <label for="is-private">Private?</label>
                 </div>
-                <div class="flex justify-between">
+                <div class="flex space-x-2">
                     <button type="submit" class="primary_btn">Submit</button>
-                    <button type="button" onclick="delete_confirmation.showModal();" class="secondary_btn"><i class="fa fa-trash"></i> Delete</button>
+                    <button type="button" class="secondary_btn" hx-get="{{ route('projects.editor', ['project'=>$entity->project]) }}" hx-target="#dashboard_body" hx-indicator="#dashboard_loader">Cancel</button>
+                    {{-- NOTE: the above line contains an extra db call, fix later --}}
                 </div>
             </form>
+        </div>
         </div>
     </div>
 </div>
