@@ -6,4 +6,5 @@ class {{ $s . $entity->singular_name }}Schema(SQLAlchemyAutoSchema):
     class Meta:
         model = {{ $s . $entity->singular_name }}
         load_instance = True
+        include_fk = True
 @endforeach

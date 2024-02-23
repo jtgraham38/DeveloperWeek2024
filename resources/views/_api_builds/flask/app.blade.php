@@ -119,8 +119,17 @@ def {{ $s . $entity->multiple_name }}_get(id):
     if not model:
         abort(404)
 
+    #get relationship index
+    relationships = {}
+    for rel_name, rel_value in model.__mapper__.relationships.items():
+        relationships[rel_name] = getattr(model, rel_name)
+
     #use schema
     result = schema.dump(model)
+
+    #add relations to result
+    for name, relationship in relationships.items():
+        result[name] = [getattr(_model, type(_model).__mapper__.primary_key[0].name) for _model in relationship]
 
     #assemble response
     response = {
@@ -161,10 +170,22 @@ def {{ $s . $entity->multiple_name }}_update(id):
     db.session.add(model)
     db.session.commit()
 
+    #create result
+    result = schema.dump(model)
+
+    #get relationship index
+    relationships = {}
+    for rel_name, rel_value in model.__mapper__.relationships.items():
+        relationships[rel_name] = getattr(model, rel_name)
+    
+    #add relations to result
+    for name, relationship in relationships.items():
+        result[name] = [getattr(_model, type(_model).__mapper__.primary_key[0].name) for _model in relationship]
+
     #assemble response
     response = {
         "msg": "Record updated.",
-        "data": schema.dump(model)
+        "data": result
     }
 
     #return message and result
@@ -180,6 +201,21 @@ def {{ $s . $entity->multiple_name }}_delete(id):
     #return 404 if not found
     if not model:
         abort(404)
+    
+    #ensure relationships do not prevent deletion
+    #get violating models
+    relationships = {}
+    for rel_name, rel_value in model.__mapper__.relationships.items():
+        relationships[rel_name] = [_model.id for _model in getattr(model, rel_name)]
+
+    #return error message if relationships exist
+    if len(relationships) > 0:
+        return jsonify({
+            "error":{
+                "msg": "A foreign key constraint failed.  Delete all related records first.",
+                "cause": relationships
+            }
+        })
 
     #delete record
     db.session.delete(model)
@@ -187,6 +223,15 @@ def {{ $s . $entity->multiple_name }}_delete(id):
 
     #use schema
     result = schema.dump(model)
+
+    #get relationship index
+    relationships = {}
+    for rel_name, rel_value in model.__mapper__.relationships.items():
+        relationships[rel_name] = getattr(model, rel_name)
+    
+    #add relations to result
+    for name, relationship in relationships.items():
+        result[name] = [getattr(_model, type(_model).__mapper__.primary_key[0].name) for _model in relationship]
 
     #assemble response
     response = {
