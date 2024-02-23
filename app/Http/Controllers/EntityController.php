@@ -50,30 +50,31 @@ class EntityController extends Controller
     {
         $input = $request->all();
 
-        $entity = DB::table('entities')->insertGetId([
-            'display_name' => $input['entity-name'],
-            'description' => $input['entity-desc'],
-            'singular_name' => $input['singular-name'],
-            'multiple_name' => $input['singular-name'] . "s",   //TODO: add input for this
-            'table_name' => $input['table-name'],
-            'is_private' => $request->has('is-private') ? true : false,
-            'project_id' => $project_id
-        ]);
+        $entity = new Entity;
+        $entity->display_name = $input['entity-name'];
+        $entity->description = $input['entity-desc'];
+        $entity->singular_name = $input['singular-name'];
+        $entity->multiple_name = $input['singular-name'] . "s";   //TODO: add input for this
+        $entity->table_name = $input['table-name'];
+        $entity->is_private = $request->has('is-private') ? true : false;
+        $entity->project_id = $project_id;
+        $entity->save();
+
         $datatype_key = 'column-datatype-';
         $name_key = 'column-name-';
         $column_is_key_key = 'column-is-key-';
-        $column_is_foreign_key_key = 'foreign_attr_id_';
+        $column_is_foreign_key_key = 'column-is-foreign-key-';
 
         $rows = $request->integer('row-count');
 
         for ($i = 1; $i <= $rows; $i++) {
-            DB::table('entity_attributes')->insert([
-                'type' => $input[$datatype_key.$i],
-                'name' => $input[$name_key.$i],
-                'is_key' => $request->has($column_is_key_key.$i) ? true : false,
-                'foreign_id' => $request->input($column_is_foreign_key_key.$i),
-                'entity_id' => $entity
-            ]);
+            $attribute = new EntityAttribute;
+            $attribute->type = $input[$datatype_key.$i];
+            $attribute->name = $input[$name_key.$i];
+            $attribute->is_key = $request->has($column_is_key_key.$i) ? true : false;
+            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
+            $attribute->entity_id = $entity->getKey();
+            $attribute->save();
         }
         return redirect()->route('projects.edit', [ 'project'=>$project_id, 'p'=>'editor' ]);
     }
@@ -81,10 +82,17 @@ class EntityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Entity $entity)
+    public function edit(Project $project, Entity $entity)
     {
-        $attributes = EntityAttribute::where("entity_id", $entity->id)->get();
-        return view('entity.edit-entity', [ "entity" => $entity, "entity_attributes" =>  $attributes]);
+        $other_attributes = EntityAttribute::whereIn('entity_id', Entity::where('project_id', $project->id)->get('id'))->get();
+        $other_entities = Entity::where('project_id', $project->id)->get()->keyBy('id');
+        $entity_attributes = EntityAttribute::where("entity_id", $entity->id)->get();
+        return view('entity.edit-entity', [
+            "entity" => $entity,
+            "entity_attributes" =>  $entity_attributes,
+            "other_entities" => $other_entities,
+            "other_attributes" => $other_attributes
+        ]);
     }
 
     /**
@@ -131,7 +139,7 @@ class EntityController extends Controller
             $attribute->name = $input[$name_key.$i];
             $attribute->type = $input[$datatype_key.$i];
             $attribute->is_key = $request->has($column_is_key_key.$i) ? true : false;
-            $attribute->is_foreign = $request->has($column_is_foreign_key_key.$i) ? true : false;
+            $attribute->foreign_id = $input[$column_is_foreign_key_key.$i] != "none" ? $request->integer($column_is_foreign_key_key.$i) : null;
             $attribute->save();
         }
         // Create new entities
@@ -141,7 +149,7 @@ class EntityController extends Controller
             $attribute->name = $input[$new_key.$name_key.$i];
             $attribute->type = $input[$new_key.$datatype_key.$i];
             $attribute->is_key = $request->has($new_key.$column_is_key_key.$i) ? true : false;
-            $attribute->is_foreign = $request->has($new_key.$column_is_foreign_key_key.$i) ? true : false;
+            $attribute->foreign_id = $input[$new_key.$column_is_foreign_key_key.$i] != "none" ? $request->integer($new_key.$column_is_foreign_key_key.$i) : null;
             $attribute->entity_id = $entity->id;
             $attribute->save();
         }
@@ -154,6 +162,8 @@ class EntityController extends Controller
      */
     public function destroy(Entity $entity)
     {
-        //
+        $project_id = $entity->project_id;
+        $entity->delete();
+        return redirect()->route('projects.edit', [ $project_id ]);
     }
 }

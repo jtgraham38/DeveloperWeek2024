@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entity;
+use App\Models\EntityAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Project;
@@ -65,7 +68,7 @@ class ProjectController extends Controller
         }
 
         // Get all entities associated with this project
-        $entities = app("App\Http\Controllers\EntityController")->index($id);
+        $entities = Entity::where('project_id', $id)->get();
 
         //return view
         return view('projects.show', ['project' => $project, 'entities' => $entities]);
@@ -145,10 +148,15 @@ class ProjectController extends Controller
         }
 
         // Get all entities associated with this project
-        $entities = app("App\Http\Controllers\EntityController")->index($id);
+        $entity_query = Entity::where('project_id', $id);
+        $entities = $entity_query->get();
+
+        // Get other entities' attributes
+        $entity_attributes = EntityAttribute::whereIn('entity_id', $entity_query->get('id'))->get();
+        $other_entities = $entity_query->get()->keyBy('id');
 
         //return view
-        return view('projects.editor', ['project' => $project, 'entities' => $entities]);
+        return view('projects.editor', ['project' => $project, 'entities' => $entities, 'entity_attributes' => $entity_attributes, 'other_entities' => $other_entities]);
     }
 
     public function settings(string $id){

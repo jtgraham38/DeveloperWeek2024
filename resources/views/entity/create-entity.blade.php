@@ -8,7 +8,7 @@
                 {{-- Entity name input --}}
                 <label for="entity-name">Entity name</label>
                 <p class="text-sm text-zinc-400">The human-readable name for this table, e.g. 'My table'</p>
-                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()">
+                <input type="text" name="entity-name" id="entity-name" onkeyup="update_table_name()" required>
 
                 {{-- Entity description --}}
                 <label for="entity-desc">Entity description</label>
@@ -17,12 +17,12 @@
                 {{-- Table name --}}
                 <label for="table-name">Table name</label>
                 <p class="text-sm text-zinc-400">The machine name for this table, e.g. 'my_table'</p>
-                <input type="text" name="table-name" id="table-name" x-text="table_name">
+                <input type="text" name="table-name" id="table-name" x-text="table_name" required>
 
-                {{-- Table name --}}
+                {{-- Singular name --}}
                 <label for="table-name">Singular name</label>
                 <p class="text-sm text-zinc-400">Singular name for an entry in this table, used in instances like cacti/cactus, etc.</p>
-                <input type="text" name="singular-name" id="singular-name" x-text="singular_name">
+                <input type="text" name="singular-name" id="singular-name" required>
 
                 {{-- Table columns --}}
                 <p>Table columns</p>
@@ -42,30 +42,12 @@
                             </select>
                             <input type="text" :name="'column-name-'+i" class="mb-0" required>
                             <input type="checkbox" :name="'column-is-key-'+i" class="h-min">
-
-                            
-                            <div class="flex space-x-2" x-data="{is_foreign: false, foreign_entity_id: '', foreign_attr_id: ''}">
-                                <input type="checkbox" x-model="is_foreign" x-effect="is_foreign ? '' : foreign_entity_id=''; foreign_attr_id='';" :name="'column-is-foreign-key-'+i" class="h-min">
-
-                                <select class="p-1" x-on:change="is_foreign ? foreign_entity_id = $event.target.value : foreign_entity_id =''; foreign_attr_id='null';" x-show="is_foreign">
-                                    <option class="text-zinc-200" value="null" x-bind:selected="foreign_entity_id == 'null'">Choose an entity...</option>
-                                    @foreach($project->entities as $entity)
-                                        <option class="text-zinc-200" value="{{ $entity->id }}">{{ $entity->display_name }}</option>
-                                    @endforeach
-                                </select>
-
-                                <select class="p-1" x-model="foreign_attr_id" x-show="is_foreign && foreign_entity_id != ''">
-                                    <option class="text-zinc-200" value="null" x-bind:selected="foreign_attr_id == 'null'">Choose an attribute...</option>
-                                    @foreach($project->entities as $entity)
-                                        @foreach($entity->attributes as $attribute)
-                                            <option x-show="{{ $entity->id }} == foreign_entity_id" class="text-zinc-200" value="{{ $attribute->id }}">{{ $attribute->name }}</option>
-                                        @endforeach
-                                    @endforeach
-                                </select>
-
-                                <input type="hidden" x-bind:name="'foreign_attr_id_' + i" x-bind:disabled="foreign_attr_id == 'null'" x-model="foreign_attr_id">
-                            </div>
-
+                            <select :name="'column-is-foreign-key-'+i">
+                                <option value="none">None</option>
+                                @foreach ($entity_attributes as $attr)
+                                    <option value="{{$attr->id}}">{{ $attr->name }} ({{ $other_entities[$attr->entity_id]["display_name"] }})</option>
+                                @endforeach
+                            </select>
                     </div>
                 </template>
                 <input type="number" name="row-count" x-model="rows" hidden>
@@ -77,7 +59,9 @@
                     <input type="checkbox" class="mb-0" name="is-private" id="is-private">
                     <label for="is-private">Private?</label>
                 </div>
-                <button type="submit" class="primary_btn">Submit</button>
+                <div class="flex justify-between">
+                    <button type="submit" class="primary_btn">Submit</button>
+                </div>
             </form>
         </div>
     </div>
